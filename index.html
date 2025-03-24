@@ -39,47 +39,54 @@
           <div class="inputs">
             <!-- Correo -->
             <label for="email">
-              correo electrónico <span>*</span>
+              Correo Electrónico <span>*</span>
             </label>
             <div class="input-container">
               <input
                 type="email"
                 id="email"
-                placeholder="matricula@tec.mx"
+                placeholder="AXXXXXXX@tec.mx"
               />
             </div>
 
             <!-- Contraseña -->
             <label for="password">
-              contraseña <span>*</span>
+              Contraseña <span>*</span>
             </label>
             <div class="input-container password-container">
               <input
                 type="password"
                 id="password"
-                placeholder="Contraseña"
+                placeholder="********"
               />
-              <!-- Ícono de ojo (por defecto off_eye.svg; cambia a eye.svg si lo “activas”) -->
+              <!-- Ícono de ojo: al hacer clic se cambia el placeholder y el tipo -->
               <img
-                src="images/off_eye.svg"
+                src="images/hidden_eye.svg"
                 alt="eye icon"
                 class="eye-icon"
+                id="togglePassword"
               />
             </div>
 
             <!-- Recuérdame + ¿No puedes acceder? -->
             <div class="extras-row">
               <div class="remember-me">
-                <input type="checkbox" id="rememberCheckbox" />
-                <label for="rememberCheckbox">Recuérdame</label>
+                <!-- Checkbox basado en imagen -->
+                <img
+                  src="images/uncheckedbox.svg"
+                  alt="checkbox"
+                  class="checkbox-icon"
+                  id="rememberCheckboxIcon"
+                />
+                <label class="remember-label">Recuérdame</label>
               </div>
               <div class="help-links">
                 <span>¿No puedes acceder?</span>
-                <a href="#" class="contact-link">Contacta a un moderador Tec</a>
+                <a href="#" class="contact-link"><u>Contacta a un moderador Tec</u></a>
               </div>
             </div>
 
-            <!-- Botón "Sign In" -->
+            <!-- Botón "Autenticar" -->
             <button class="sign-in-btn">Autenticar</button>
           </div>
         </div>
@@ -92,34 +99,68 @@
 
       <!-- Sección Derecha (Fondo + Logo grande) -->
       <div class="right-section">
-        <!-- Fondo con degradado -->
+        <!-- Fondo -->
         <img
           src="images/background.png"
           alt="Fondo TecDoIt"
           class="bg-image"
         />
 
-        <!-- Logo + Texto "Tec DoIt" -->
+        <!-- Logo + Texto "TecDoIt" -->
         <div class="brand-logo">
-          <!-- Usa el mismo itesm.svg, pero con filtro para verse blanco -->
           <img
             src="images/itesm.svg"
             alt="ITESM Logo"
             class="itesm-white"
           />
-          <!-- "Tec" normal y "DoIt" en bold -->
           <h2>
             <strong>Tec</strong>DoIt
           </h2>
         </div>
       </div>
 
-      <!-- Ícono luna (Dark/Light) abajo a la derecha -->
+      <!-- Ícono luna (Modo oscuro) -->
       <img
         src="images/moon.svg"
         alt="Modo oscuro/claro"
         class="moon-icon"
       />
     </div>
+
+    <!-- Script para manejar el toggle del ojo y del checkbox -->
+    <script>
+      // Toggle para mostrar/ocultar contraseña y cambiar placeholder
+      const passwordInput = document.getElementById('password');
+      const togglePasswordIcon = document.getElementById('togglePassword');
+      let isPasswordVisible = false;
+
+      togglePasswordIcon.addEventListener('click', () => {
+        isPasswordVisible = !isPasswordVisible;
+        if (isPasswordVisible) {
+          // Ojo abierto: mostrar contraseña en texto claro y placeholder "Contraseña"
+          passwordInput.type = 'text';
+          passwordInput.placeholder = 'Contraseña';
+          togglePasswordIcon.src = 'images/off_eye.svg';
+        } else {
+          // Ojo cerrado: ocultar contraseña y placeholder "********"
+          passwordInput.type = 'password';
+          passwordInput.placeholder = '********';
+          togglePasswordIcon.src = 'images/hidden_eye.svg';
+        }
+      });
+
+      // Toggle para checkbox "Recuérdame"
+      const rememberCheckboxIcon = document.getElementById('rememberCheckboxIcon');
+      let isRememberChecked = false;
+
+      rememberCheckboxIcon.addEventListener('click', () => {
+        isRememberChecked = !isRememberChecked;
+        if (isRememberChecked) {
+          rememberCheckboxIcon.src = 'images/checkedbox.svg';
+        } else {
+          rememberCheckboxIcon.src = 'images/uncheckedbox.svg';
+        }
+      });
+    </script>
   </body>
 </html>
