@@ -144,15 +144,22 @@ input[type="email"] {
 .remember-me {
   display: flex;
   align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
 }
 .checkbox-icon {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  margin-right: 6px;
+  display: block;
 }
 .remember-label {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 8px;
   font-size: 14px;
+  line-height: 20px;
 }
 .help-links span {
   margin-right: 4px;
