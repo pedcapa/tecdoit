@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Preguntas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados inspirados en ListadoPreguntas.module.css y global.css */
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f4f7fe; /* listadopreguntas background */
+            color: #a3aed0; /* listadopreguntas color */
+            margin: 0;
+            line-height: normal;
+        }
+
+        /* Clases específicas */
+        .tecdoit-logo b {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: #2b3674;
+        }
+        .tecdoit-logo span {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+             color: #2b3674;
+        }
+        .text-main { color: #2b3674; }
+        .text-secondary { color: #707eae; }
+        .text-muted { color: #a3aed0; }
+        .text-placeholder { color: #8f9bba; }
+
+        .sidebar {
+            background-color: #fff;
+            height: 100vh; /* Ajustar altura a la ventana */
+            width: 290px; /* Ancho fijo del sidebar */
+            position: fixed; /* Fijar sidebar */
+            top: 0;
+            left: 0;
+            overflow-y: auto; /* Permitir scroll si el contenido es largo */
+            z-index: 50; /* Asegurar que esté sobre el contenido */
+        }
+        .main-content {
+            margin-left: 290px; /* Dejar espacio para el sidebar */
+            padding: 2rem; /* Añadir padding general */
+            width: calc(100% - 290px); /* Ancho restante */
+        }
+
+        .large-check-table {
+            background-color: #fff;
+            border-radius: 20px;
+            overflow: hidden; /* Asegura que los bordes redondeados se apliquen */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Sombra sutil */
+        }
+
+        .table-header, .table-row {
+            display: grid;
+            /* Definir columnas similar a la estructura del TSX/CSS */
+            /* Ajustar los tamaños según necesidad visual */
+            grid-template-columns: 40px 60px 2fr 1fr 1fr 1fr 1fr 1fr 1fr 80px; /* Checkbox, Drag, ID, Enunciado, Tipo, Isla, Temas, Dificultad, Estado, Modificado, Acciones */
+            gap: 1rem; /* Espacio entre columnas */
+            align-items: center;
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            font-size: 14px;
+        }
+
+        .table-header {
+            color: #a3aed0; /* header titles color */
+            font-weight: 500;
+            border-bottom: 1px solid #e9edf7; /* separator */
+            text-transform: uppercase; /* Convertir a mayúsculas como es común en cabeceras */
+            font-size: 12px; /* Ligeramente más pequeño */
+        }
+
+        .table-row {
+            border-bottom: 1px solid #e9edf7; /* separator */
+            color: #2b3674; /* row text color */
+            font-weight: 500;
+        }
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-header .header-item, .table-row .cell-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem; /* Espacio entre texto e icono */
+            white-space: nowrap; /* Evitar salto de línea en cabeceras */
+        }
+         .table-row .cell-item {
+             white-space: normal; /* Permitir salto de línea en celdas */
+             overflow: hidden;
+             text-overflow: ellipsis; /* Añadir puntos suspensivos si el texto es muy largo */
+         }
+         .table-row .enunciado-cell {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px; /* Limitar ancho del enunciado */
+         }
+
+        .topic-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px; /* border-radius */
+            padding: 2px 10px; /* Ajustar padding */
+            font-size: 12px;
+            font-weight: 700; /* ttile bold */
+            text-align: center;
+            border: 1px solid #e0e5f2; /* Similar a border.svg */
+            margin-right: 5px; /* Espacio entre tags */
+        }
+        .topic-tag.fracciones { background-color: #f4f7fe; color: #4e5d94; } /* Ejemplo de color */
+        .topic-tag.algebra { background-color: #fef4f4; color: #944e4e; } /* Ejemplo de color */
+        .topic-tag.exponentes { background-color: #f4fefe; color: #4e9494; } /* Ejemplo de color */
+        .topic-tag.more { background-color: #f0f0f0; color: #666; } /* Para "..." */
+
+        .status-publicada { color: #05cd99; } /* Verde */
+        .status-revision { color: #ffb547; } /* Naranja */
+        .status-rechazada { color: #f74d4d; } /* Rojo */
+
+        .difficulty-facil { color: #05cd99; }
+        .difficulty-medio { color: #ffb547; }
+        .difficulty-dificil { color: #f74d4d; }
+
+        .action-icon {
+            cursor: pointer;
+            color: #a3aed0; /* Color base iconos */
+            transition: color 0.2s ease;
+            font-size: 18px; /* Tamaño iconos acciones */
+        }
+        .action-icon:hover {
+            color: #2b3674; /* Color hover */
+        }
+        .drag-icon {
+             cursor: grab;
+             color: #a3aed0;
+        }
+        .drag-icon:active {
+             cursor: grabbing;
+        }
+
+        .pagination-controls {
+            color: #a3aed0;
+            font-weight: 500;
+        }
+        .pagination-controls i {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .pagination-controls i:hover {
+            color: #2b3674;
+        }
+
+        .misc-bar input[type="search"] {
+            background-color: #f4f7fe;
+            border-radius: 49px;
+            border: none;
+            padding-left: 42px; /* Espacio para el icono */
+        }
+        .misc-bar input[type="search"]::placeholder {
+            color: #8f9bba; /* search placeholder color */
+            font-size: 14px;
+            letter-spacing: -0.02em;
+        }
+        .misc-bar .search-icon-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            color: #8f9bba; /* search icon color */
+        }
+        .misc-bar .icon-button {
+            color: #a3aed0;
+            transition: color 0.2s ease;
+        }
+         .misc-bar .icon-button:hover {
+             color: #2b3674;
+         }
+
+        /* Footer */
+        .footer {
+            color: #a3aed0; /* footer text color */
+            font-weight: 500;
+            font-size: 14px;
+            padding: 1rem 0;
+            border-top: 1px solid #e9edf7;
+            margin-top: 2rem;
+        }
+        .footer a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: #a3aed0;
+            transition: color 0.2s ease;
+        }
+        .footer a:hover {
+            color: #2b3674;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex">
+        <aside class="sidebar shadow-lg">
+            <div class="p-8 pt-14 mb-8"> <h1 class="text-2xl tecdoit-logo"><b>tec</b><span>doit</span></h1>
+            </div>
+
+            <hr class="border-t border-gray-200 mx-4">
+
+            <nav class="mt-8 px-4 space-y-2">
+                 <a href="#" class="flex items-center px-4 py-3 text-secondary hover:text-main rounded-lg group">
+                     <i class="fas fa-home w-6 h-6 mr-3 text-lg"></i>
+                     <span class="font-medium text-base">inicio</span>
+                 </a>
+                 <a href="#" class="flex items-center px-4 py-3 text-secondary hover:text-main rounded-lg group">
+                     <i class="fas fa-plus-square w-6 h-6 mr-3 text-lg"></i>
+                     <span class="font-medium text-base">crear pregunta</span>
+                 </a>
+                 <a href="#" class="relative flex items-center px-4 py-3 text-main bg-blue-50 rounded-lg group">
+                     <i class="fas fa-list-alt w-6 h-6 mr-3 text-lg"></i>
+                     <span class="font-bold text-base">listado de preguntas</span>
+                     <span class="absolute right-0 top-0 bottom-0 w-1 bg-blue-600 rounded-l-lg"></span>
+                 </a>
+                 <a href="#" class="flex items-center px-4 py-3 text-secondary hover:text-main rounded-lg group">
+                     <i class="fas fa-tasks w-6 h-6 mr-3 text-lg"></i>
+                     <span class="font-medium text-base">revisión de preguntas</span>
+                 </a>
+                 <a href="#" class="flex items-center px-4 py-3 text-secondary hover:text-main rounded-lg group">
+                     <i class="fas fa-user w-6 h-6 mr-3 text-lg"></i>
+                     <span class="font-medium text-base">perfil</span>
+                 </a>
+                 <a href="#" class="flex items-center px-4 py-3 text-secondary hover:text-main rounded-lg group">
+                     <i class="fas fa-sign-out-alt w-6 h-6 mr-3 text-lg"></i>
+                     <span class="font-medium text-base">salir</span>
+                 </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="flex justify-between items-center mb-6">
+                <div>
+                    <p class="text-sm text-secondary">inicio / listado de preguntas</p>
+                    <h2 class="text-3xl font-bold text-main mt-1">listado de preguntas</h2>
+                </div>
+                <div class="misc-bar relative flex items-center bg-white shadow-md rounded-full px-4 py-2 h-[61px] w-[422px]">
+                     <div class="relative flex-grow">
+                         <span class="search-icon-wrapper"><i class="fas fa-search text-xs"></i></span>
+                         <input type="search" placeholder="buscar enunciado..." class="w-full h-[41px] text-sm focus:outline-none pl-10 pr-4 text-placeholder">
+                     </div>
+                     <button class="icon-button p-2 ml-4 rounded-full hover:bg-gray-100">
+                         <i class="far fa-bell text-xl"></i>
+                     </button>
+                     <button class="icon-button p-2 ml-2 rounded-full hover:bg-gray-100">
+                         <i class="far fa-moon text-lg"></i> </button>
+                     <img src="https://placehold.co/40x40/E0E5F2/4A5568?text=AV" alt="Avatar" class="w-10 h-10 rounded-full ml-4 border-2 border-white">
+                </div>
+            </header>
+
+            <div class="large-check-table">
+                <div class="flex justify-between items-center p-4 px-6 pt-5">
+                    <h3 class="text-xl font-bold text-main">Preguntas</h3>
+                    <button class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-plus-circle text-2xl"></i> </button>
+                </div>
+
+                <div class="table-header">
+                    <div class="header-item"><i class="fas fa-grip-vertical drag-icon invisible"></i></div> <div class="header-item"><input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"></div>
+                    <div class="header-item">ID <i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="header-item">Enunciado <i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="header-item">Tipo <i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="header-item">Isla <i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="header-item">Temas <i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="header-item">Dificultad <i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="header-item">Estado <i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="header-item">Modificado <i class="fas fa-chevron-down text-xs"></i></div>
+                    <div class="header-item">Acciones</div>
+                </div>
+
+                <div class="table-body">
+                    <div class="table-row">
+                        <div class="cell-item"><i class="fas fa-grip-vertical drag-icon"></i></div>
+                        <div class="cell-item"><input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"></div>
+                        <div class="cell-item font-semibold">2001</div>
+                        <div class="cell-item enunciado-cell">Explica detalladamente la diferencia entre una fracción propia, una fracción...</div>
+                        <div class="cell-item">Opción Múltiple</div>
+                        <div class="cell-item">1.1</div>
+                        <div class="cell-item">
+                            <span class="topic-tag fracciones">fracciones</span>
+                            <span class="topic-tag more">...</span>
+                        </div>
+                        <div class="cell-item difficulty-facil">Fácil</div>
+                        <div class="cell-item status-publicada">Publicada</div>
+                        <div class="cell-item">05-03-2025</div>
+                        <div class="cell-item flex space-x-2">
+                            <i class="fas fa-eye action-icon" title="Ver"></i>
+                            <i class="fas fa-edit action-icon" title="Editar"></i>
+                            <i class="fas fa-trash action-icon" title="Eliminar"></i>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                         <div class="cell-item"><i class="fas fa-grip-vertical drag-icon"></i></div>
+                         <div class="cell-item"><input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"></div>
+                         <div class="cell-item font-semibold">2012</div>
+                         <div class="cell-item enunciado-cell">Resuelve paso a paso la siguiente expresión con jerarquía de operaciones, ...</div>
+                         <div class="cell-item">Checkbox</div>
+                         <div class="cell-item">1.2</div>
+                         <div class="cell-item">
+                             <span class="topic-tag algebra">algebra</span>
+                             <span class="topic-tag more">...</span>
+                         </div>
+                         <div class="cell-item difficulty-medio">Medio</div>
+                         <div class="cell-item status-revision">En Revisión</div>
+                         <div class="cell-item">06-03-2025</div>
+                         <div class="cell-item flex space-x-2">
+                             <i class="fas fa-eye action-icon" title="Ver"></i>
+                             <i class="fas fa-edit action-icon" title="Editar"></i>
+                             <i class="fas fa-trash action-icon" title="Eliminar"></i>
+                         </div>
+                    </div>
+                    <div class="table-row">
+                         <div class="cell-item"><i class="fas fa-grip-vertical drag-icon"></i></div>
+                         <div class="cell-item"><input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"></div>
+                         <div class="cell-item font-semibold">2013</div>
+                         <div class="cell-item enunciado-cell">Escribe todas las leyes de los exponentes (producto, cociente, potencia de ...</div>
+                         <div class="cell-item">Checkbox</div>
+                         <div class="cell-item">1.3</div>
+                         <div class="cell-item">
+                             <span class="topic-tag exponentes">exponentes</span>
+                             <span class="topic-tag more">...</span>
+                         </div>
+                         <div class="cell-item difficulty-dificil">Difícil</div>
+                         <div class="cell-item status-rechazada">Rechazada</div>
+                         <div class="cell-item">07-03-2025</div>
+                         <div class="cell-item flex space-x-2">
+                             <i class="fas fa-eye action-icon" title="Ver"></i>
+                             <i class="fas fa-edit action-icon" title="Editar"></i>
+                             <i class="fas fa-trash action-icon" title="Eliminar"></i>
+                         </div>
+                    </div>
+                     <div class="table-row">
+                        <div class="cell-item"><i class="fas fa-grip-vertical drag-icon"></i></div>
+                        <div class="cell-item"><input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"></div>
+                        <div class="cell-item font-semibold">2014</div>
+                        <div class="cell-item enunciado-cell">Explica detalladamente la diferencia entre una fracción propia, una fracción...</div>
+                        <div class="cell-item">Opción Múltiple</div>
+                        <div class="cell-item">1.1</div>
+                        <div class="cell-item">
+                            <span class="topic-tag fracciones">fracciones</span>
+                            <span class="topic-tag more">...</span>
+                        </div>
+                        <div class="cell-item difficulty-facil">Fácil</div>
+                        <div class="cell-item status-publicada">Publicada</div>
+                        <div class="cell-item">05-03-2025</div>
+                        <div class="cell-item flex space-x-2">
+                            <i class="fas fa-eye action-icon" title="Ver"></i>
+                            <i class="fas fa-edit action-icon" title="Editar"></i>
+                            <i class="fas fa-trash action-icon" title="Eliminar"></i>
+                        </div>
+                    </div>
+                     <div class="table-row">
+                         <div class="cell-item"><i class="fas fa-grip-vertical drag-icon"></i></div>
+                         <div class="cell-item"><input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"></div>
+                         <div class="cell-item font-semibold">2015</div>
+                         <div class="cell-item enunciado-cell">Resuelve paso a paso la siguiente expresión con jerarquía de operaciones, ...</div>
+                         <div class="cell-item">Opción Múltiple</div> <div class="cell-item">1.2</div>
+                         <div class="cell-item">
+                             <span class="topic-tag algebra">algebra</span>
+                             <span class="topic-tag more">...</span>
+                         </div>
+                         <div class="cell-item difficulty-medio">Medio</div>
+                         <div class="cell-item status-revision">En Revisión</div>
+                         <div class="cell-item">06-03-2025</div>
+                         <div class="cell-item flex space-x-2">
+                             <i class="fas fa-eye action-icon" title="Ver"></i>
+                             <i class="fas fa-edit action-icon" title="Editar"></i>
+                             <i class="fas fa-trash action-icon" title="Eliminar"></i>
+                         </div>
+                    </div>
+                    </div>
+
+                <div class="flex justify-end items-center p-4 pagination-controls text-sm">
+                    <span>Página 1 de 5</span>
+                    <button class="ml-4 p-1 rounded hover:bg-gray-100">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="ml-2 p-1 rounded hover:bg-gray-100">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <footer class="footer flex justify-between items-center mt-8 text-sm">
+                <span>© 2025 Tec DoIt. Todos los derechos reservados.</span>
+                <div>
+                    <a href="#">Licencia</a>
+                    <a href="#">Términos de Uso</a>
+                    <a href="#">Blog</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Aquí podrías añadir JavaScript para funcionalidades como:
+        // - Checkbox de selección múltiple
+        // - Ordenación de columnas al hacer clic en cabeceras
+        // - Paginación real
+        // - Filtrado por búsqueda
+        // - Funcionalidad de los botones de acción (ver, editar, eliminar)
+        // - Drag and drop de filas
+        console.log("Interfaz cargada. Añadir JavaScript para interactividad.");
+    </script>
+
+</body>
+</html>
