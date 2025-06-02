@@ -1,0 +1,384 @@
+{
+"isla 1": [
+  {
+    "pregunta": "Resuelve: 7/8 + 4/5 + 8/9",
+    "opciones": [
+      { "texto": "923/360", "correcta": true },
+      { "texto": "456/223", "correcta": false },
+      { "texto": "972/234", "correcta": false },
+      { "texto": "123/987", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 4/5 - 2/4 + 1/2 - 3/8",
+    "opciones": [
+      { "texto": "13/40", "correcta": false },
+      { "texto": "15/40", "correcta": false },
+      { "texto": "21/40", "correcta": false },
+      { "texto": "17/40", "correcta": true }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 1/2 * 2/5 * 3/8 - 4/5",
+    "opciones": [
+      { "texto": "-29/40", "correcta": true },
+      { "texto": "-17/40", "correcta": false },
+      { "texto": "-21/40", "correcta": false },
+      { "texto": "29/40", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 1/2 / 4/5 / 7/8",
+    "opciones": [
+      { "texto": "6/8", "correcta": false },
+      { "texto": "5/7", "correcta": true },
+      { "texto": "17/20", "correcta": false },
+      { "texto": "1/2", "correcta": false }
+    ]
+  }
+],
+
+"isla 2": [
+  {
+    "pregunta": "Resuelve: 2 + 7 * 3 - 6",
+    "opciones": [
+      { "texto": "15", "correcta": false },
+      { "texto": "17", "correcta": true },
+      { "texto": "16", "correcta": false },
+      { "texto": "18", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 3^2 + 7(2 - 1)^5",
+    "opciones": [
+      { "texto": "15", "correcta": false },
+      { "texto": "16", "correcta": true },
+      { "texto": "17", "correcta": false },
+      { "texto": "19", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 6(8 - 5 * 2) - (5 * 3 + 7)",
+    "opciones": [
+      { "texto": "34", "correcta": false },
+      { "texto": "-34", "correcta": true },
+      { "texto": "-35", "correcta": false },
+      { "texto": "-43", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 8^2 - 7 * 4 + [3 + 4(2 - 1)] / 15",
+    "opciones": [
+      { "texto": "547/15", "correcta": true },
+      { "texto": "548/15", "correcta": false },
+      { "texto": "547/145", "correcta": false },
+      { "texto": "548/145", "correcta": false }
+    ]
+  }
+],
+
+"isla 3": [
+  {
+    "pregunta": "Resuelve: \\(\\frac{5^{2}}{5^{4}}\\)",
+    "opciones": [
+      { "texto": "1/5", "correcta": false },
+      { "texto": "1/25", "correcta": true },
+      { "texto": "5", "correcta": false },
+      { "texto": "25", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: \\(x^4 * x^5 * x^{-12} / x^3 * x^{-6} * x^{-8} * x^2)",
+    "opciones": [
+      { "texto": "x^{6}", "correcta": true },
+      { "texto": "1/x^{15}", "correcta": false },
+      { "texto": "1/x^{16}", "correcta": false },
+      { "texto": "1/x^{17}", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: \\dfrac{4^5 \\times 4^{-4} \\times 4^2}{2^5 \\times 2^{-3} \\times 2^{-2}}",
+    "opciones": [
+      { "texto": "32", "correcta": false },
+      { "texto": "128", "correcta": false },
+      { "texto": "64", "correcta": true },
+      { "texto": "16", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Rersuelve: \\dfrac{4^2 \\times 8^3 \\times 2^2}{3^2 \\times 9^4 \\times 3^{-7}}",
+    "opciones": [
+      { "texto": "32768/27", "correcta": true },
+      { "texto": "32769/27", "correcta": false },
+      { "texto": "32765/27", "correcta": false },
+      { "texto": "32767/27", "correcta": false }
+    ]
+  }
+],
+
+"isla 4": [
+  {
+    "pregunta": "Resuelve: 2x + 3x - 4x",
+    "opciones": [
+      {"texto": "$\\dfrac{32768}{27}$", "correcta": true},
+      {"texto": "$\\dfrac{32769}{27}$", "correcta": false},
+      {"texto": "$\\dfrac{32765}{27}$", "correcta": false},
+      {"texto": "$\\dfrac{32767}{27}$", "correcta": false}
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 2y * -4y",
+    "opciones": [
+      { "texto": "-8y^2", "correcta": true },
+      { "texto": "-8y^3", "correcta": false },
+      { "texto": "8y^2", "correcta": false },
+      { "texto": "8y^4", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 4x + 2y - 3x + 3y",
+    "opciones": [
+      { "texto": "x + 3y", "correcta": false },
+      { "texto": "x + 5y", "correcta": true },
+      { "texto": "x + 7y", "correcta": false },
+      { "texto": "x + 9y", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: (4x + 2x) * 5x - 2x * 3x",
+    "opciones": [
+      { "texto": "23x^2", "correcta": false },
+      { "texto": "24x^2", "correcta": true },
+      { "texto": "21x^2", "correcta": false },
+      { "texto": "22x^2", "correcta": false }
+    ]
+  }
+],
+
+"isla 5": [
+  {
+    "pregunta": "Resuelve: (5x + 10y)(5x - 10y)",
+    "opciones": [
+      { "texto": "24x^2 + 100y^2", "correcta": false },
+      { "texto": "25x^2 - 100y^2", "correcta": true },
+      { "texto": "24x^2 - 100y^2", "correcta": false },
+      { "texto": "25x^2 + 100y^2", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: (3a^3 + x^2)^2",
+    "opciones": [
+      { "texto": "9a^6 + 6a^3x^2 + x^3", "correcta": false },
+      { "texto": "9a^6 + 6a^3x^2 + x^4", "correcta": true },
+      { "texto": "9a^5 + 6a^3x^2 + x^4", "correcta": false },
+      { "texto": "9a^6 + 6a^3x^5 + x^4", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: (5x + 6)(5x - 6)",
+    "opciones": [
+      { "texto": "25x^2 - 36", "correcta": true },
+      { "texto": "25x^2 + 36", "correcta": false },
+      { "texto": "36x^2 + 25", "correcta": false },
+      { "texto": "36x^2 - 25", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Resuelve: 25a^2 - 49b^2",
+    "opciones": [
+      { "texto": "(5a + 7b)(5a + 7b)", "correcta": false },
+      { "texto": "(5a + 7b)(5a - 7b)", "correcta": true },
+      { "texto": "(5a - 7b)(5a - 7b)", "correcta": false },
+      { "texto": "(5a - 7b)(7b - 5a)", "correcta": false }
+    ]
+  }
+],
+
+"isla 6": [
+  {
+    "pregunta": "Simplifica: \\(\\frac{2x + 4y}{2}\\)",
+    "opciones": [
+      { "texto": "x + 2y", "correcta": true },
+      { "texto": "2x + 2y", "correcta": false },
+      { "texto": "x + y", "correcta": false },
+      { "texto": "2x + 4y", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Simplifica: \\(\\frac{3x^2 + 6y^2}{3}\\)",
+    "opciones": [
+      { "texto": "x^2 + 2y^2", "correcta": true },
+      { "texto": "3x^2 + 6y^2", "correcta": false },
+      { "texto": "x^2 + y^2", "correcta": false },
+      { "texto": "3x^2 + 2y^2", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Simplifica: \\(\\frac{5x^3 + 15y^3}{5}\\)",
+    "opciones": [
+      { "texto": "x^3 + 3y^3", "correcta": true },
+      { "texto": "5x^3 + 3y^3", "correcta": false },
+      { "texto": "x^3 + y^3", "correcta": false },
+      { "texto": "5x^3 + 15y^3", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Simplifica: \\(\\frac{4x^2 + 8y^2}{4}\\)",
+    "opciones": [
+      { "texto": "x^2 + 2y^2", "correcta": true },
+      { "texto": "4x^2 + 2y^2", "correcta": false },
+      { "texto": "x^2 + y^2", "correcta": false },
+      { "texto": "4x^2 + 8y^2", "correcta": false }
+    ]
+  }
+],
+
+"isla 7": [
+  {
+    "pregunta": "Simplifica: \\(\\frac{x^2 - 3x}{x^2 + 3x}\\)",
+    "opciones": [
+      { "texto": "(x - 3) / (x - 3)", "correcta": false },
+      { "texto": "(x - 3) / (x + 3)", "correcta": true },
+      { "texto": "(x + 3) / (x + 3)", "correcta": false },
+      { "texto": "(x + 3) / (x - 3)", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Simplifica: \\(\\frac{3x^2 - 6x}{6x^2 - 12x}\\)",
+    "opciones": [
+      { "texto": "1/2", "correcta": true },
+      { "texto": "2/3", "correcta": false },
+      { "texto": "3/6", "correcta": false },
+      { "texto": "6/12", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Simplifica: \\(\\frac{5x^3 - 10x^2}{10x^3 - 20x^2}\\)",
+    "opciones": [
+      { "texto": "1/2", "correcta": true },
+      { "texto": "2/3", "correcta": false },
+      { "texto": "3/6", "correcta": false },
+      { "texto": "6/12", "correcta": false }
+    ]
+  },
+  {
+    "pregunta": "Simplifica: \\(\\frac{6x^4 - 12x^3}{12x^4 - 24x^3}\\)",
+    "opciones": [
+      { "texto": "1/2", "correcta": true },
+      { "texto": "2/3", "correcta": false },
+      { "texto": "3/6", "correcta": false },
+      { "texto": "6/12", "correcta": false }
+    ]
+  }
+],
+
+
+  "isla 8": [
+    {
+      "pregunta": "Resuelve: 5x - 10 < 15",
+      "opciones": [
+        { "texto": "x < 4", "correcta": false },
+        { "texto": "x < 5", "correcta": true },
+        { "texto": "x > 5", "correcta": false },
+        { "texto": "x > 4", "correcta": false }
+      ]
+    },
+    {
+      "pregunta": "Resuelve: 4x + 2 ≥ 2x + 10",
+      "opciones": [
+        { "texto": "x ≥ 4", "correcta": true },
+        { "texto": "x ≥ 3", "correcta": false },
+        { "texto": "x ≥ 2", "correcta": false },
+        { "texto": "x ≥ 1", "correcta": false }
+      ]
+    },
+    {
+      "pregunta": "Resuelve: 2(3x - 3) > 4x",
+      "opciones": [
+        { "texto": "x < 3", "correcta": false },
+        { "texto": "x > 4", "correcta": false },
+        { "texto": "x > 3", "correcta": true },
+        { "texto": "x < 4", "correcta": false }
+      ]
+    },
+    {
+      "pregunta": "Resuelve: 4(2x + 4) - 3 ≤ 2(3x + 4) + 3",
+      "opciones": [
+        { "texto": "x ≤ 1", "correcta": false },
+        { "texto": "x ≤ -2", "correcta": false },
+        { "texto": "x ≤ 2", "correcta": false },
+        { "texto": "x ≤ -1", "correcta": true }
+      ]
+    }
+  ],
+
+  "isla 9": [
+    {
+      "pregunta": "¿Cuál es la solución del siguiente sistema de ecuaciones?\n{\n  2x + 3y = 6\n  -x + 4y = 5\n}",
+      "opciones": [
+        { "texto": "x = 1, y = 2", "correcta": false },
+        { "texto": "x = 0, y = 2", "correcta": false },
+        { "texto": "x = 2/11, y = 1/11", "correcta": false },
+        { "texto": "x = 9/11, y = 16/11", "correcta": true }
+      ]
+    },
+    {
+      "pregunta": "¿Cuál es la solución del siguiente sistema de ecuaciones por el método de sustitución?\n{\n  x = 2y + 1\n  3x + y = 10\n}",
+      "opciones": [
+        { "texto": "x = 3, y = 1", "correcta": false },
+        { "texto": "x = 5, y = 2", "correcta": true },
+        { "texto": "x = 4, y = 2", "correcta": false },
+        { "texto": "x = 6, y = 2", "correcta": false }
+      ]
+    },
+    {
+      "pregunta": "¿Cuál es la solución del siguiente sistema de ecuaciones por el método de igualación?\n{\n  y = 2x + 1\n  y = -x + 7\n}",
+      "opciones": [
+        { "texto": "x = 2, y = 5", "correcta": true },
+        { "texto": "x = 1, y = 3", "correcta": false },
+        { "texto": "x = 0, y = 1", "correcta": false },
+        { "texto": "x = 3, y = 4", "correcta": false }
+      ]
+    },
+    {
+      "pregunta": "¿Cuál es la solución del siguiente sistema de ecuaciones por el método de reducción?\n{\n  2x + 3y = 12\n  4x - 3y = 6\n}",
+      "opciones": [
+        { "texto": "x = 3, y = 2", "correcta": true },
+        { "texto": "x = 2, y = 3", "correcta": false },
+        { "texto": "x = 4, y = 0", "correcta": false },
+        { "texto": "x = 1, y = 4", "correcta": false }
+      ]
+    }
+  ],
+
+  "isla 10": [
+    {
+      "pregunta": "¿Es verdadero que log_b(xy) = log_b(x) + log_b(y)?",
+      "opciones": [
+        { "texto": "Verdadero", "correcta": true },
+        { "texto": "Falso", "correcta": false }
+      ]
+    },
+    {
+      "pregunta": "¿Es verdadero que log_b(x^n) = n * log_b(x)?",
+      "opciones": [
+        { "texto": "Verdadero", "correcta": true },
+        { "texto": "Falso", "correcta": false }
+      ]
+    },
+    {
+      "pregunta": "¿Es verdadero que log_b(b) = 1 para cualquier base b > 0, b ≠ 1?",
+      "opciones": [
+        { "texto": "Verdadero", "correcta": true },
+        { "texto": "Falso", "correcta": false }
+      ]
+    },
+    {
+      "pregunta": "¿Es verdadero que log_b(0) = 0?",
+      "opciones": [
+        { "texto": "Verdadero", "correcta": false },
+        { "texto": "Falso", "correcta": true }
+      ]
+    }
+  ]
+}
