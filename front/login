@@ -9,41 +9,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilo base para aplicar la fuente Inter */
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Ocultar flechas en input number (si se usara) */
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
         input[type=number] {
-            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
         }
     </style>
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
 
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-semibold text-center text-gray-800 mb-2">
-            ingresa a tu cuenta <span class="font-bold text-indigo-600">tecdoit</span>
+        <h1 class="text-2xl font-light text-center text-gray-800 mb-2">
+            ingresa a tu cuenta <span class="font-bold text-indigo-600">tec</span><span class="font-light text-indigo-600">doit</span>
         </h1>
         <p class="text-sm text-gray-500 text-center mb-6">
             introduce tu email y contraseña para ingresar
         </p>
-
-        <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 mb-4 transition duration-150 ease-in-out border border-gray-200">
-             <img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/graduation-cap.svg" alt="Icono Tec" class="w-5 h-5 text-gray-600"/>
-             continuar con el Tec
-        </button>
-
-        <div class="flex items-center my-6">
-            <hr class="flex-grow border-t border-gray-300">
-            <span class="mx-4 text-xs text-gray-500 uppercase">o ingresar con</span>
-            <hr class="flex-grow border-t border-gray-300">
-        </div>
 
         <form id="loginForm">
             <div class="mb-4">
@@ -70,6 +62,7 @@
                         <img id="eyeOffIcon" src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/eye-off.svg" alt="Ocultar contraseña" class="w-5 h-5 hidden"/>
                     </button>
                 </div>
+                <div id="errorMessage" class="error-message hidden"></div>
             </div>
 
             <div class="flex items-center mb-6">
@@ -103,43 +96,86 @@
 
         if (togglePasswordButton && passwordInput && eyeIcon && eyeOffIcon) {
             togglePasswordButton.addEventListener('click', function () {
-                // Alternar el tipo de input entre 'password' y 'text'
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
-
-                // Alternar la visibilidad de los iconos
                 eyeIcon.classList.toggle('hidden');
                 eyeOffIcon.classList.toggle('hidden');
-
-                // Actualizar aria-label para accesibilidad
                 if (type === 'password') {
                     togglePasswordButton.setAttribute('aria-label', 'Mostrar contraseña');
                 } else {
                     togglePasswordButton.setAttribute('aria-label', 'Ocultar contraseña');
                 }
             });
-        } else {
-            console.error("No se encontraron los elementos para el toggle de contraseña.");
         }
 
-        // --- Manejo del envío del formulario (ejemplo) ---
+        // --- Manejo del envío del formulario ---
         const loginForm = document.getElementById('loginForm');
+        const errorMessageElement = document.getElementById('errorMessage');
+
         if (loginForm) {
-            loginForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevenir el envío real del formulario
-                console.log('Formulario enviado (simulado)');
-                // Aquí iría la lógica para enviar los datos al backend
+            loginForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                
+                // Limpiar mensajes de error previos
+                errorMessageElement.classList.add('hidden');
+                document.getElementById('email').classList.remove('border-red-500');
+                document.getElementById('password').classList.remove('border-red-500');
+                
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
-                const remember = document.getElementById('remember').checked;
-                console.log('Email:', email);
-                console.log('Password:', password); // No loguear contraseñas en producción
-                console.log('Recuérdame:', remember);
-                // alert('Inicio de sesión simulado. Revisa la consola.'); // Evitar alerts
-                 // Podrías mostrar un mensaje de éxito/error en la UI aquí
+                // const remember = document.getElementById('remember').checked; // 'remember' no se usa actualmente
+
+                try {
+                    // Simular una llamada a la API para validar las credenciales
+                    const isValid = await validateCredentials(email, password);
+                    
+                    if (isValid) {
+                        // Credenciales correctas - redirigir
+                        console.log('Inicio de sesión exitoso. Redirigiendo...');
+                        window.location.href = 'ListadoPreguntas.html'; // Redirección a ListadoPreguntas.html
+                    } else {
+                        // Credenciales incorrectas - mostrar mensaje de error
+                        showError("Usuario y/o contraseña incorrectos");
+                    }
+                } catch (error) {
+                    console.error('Error al validar credenciales:', error);
+                    showError("Ocurrió un error al intentar iniciar sesión");
+                }
             });
-        } else {
-            console.error("No se encontró el formulario de login.");
+        }
+
+        // Función para mostrar mensajes de error
+        function showError(message) {
+            if (errorMessageElement) {
+                errorMessageElement.textContent = message;
+                errorMessageElement.classList.remove('hidden');
+            }
+            
+            // Añadir clases de error a los campos de entrada
+            const emailInput = document.getElementById('email');
+            const passwordInputEl = document.getElementById('password'); // Renamed to avoid conflict with password variable in submit
+            if (emailInput) emailInput.classList.add('border-red-500');
+            if (passwordInputEl) passwordInputEl.classList.add('border-red-500');
+            
+            // Eliminar clases de error cuando el usuario empiece a editar
+            const inputs = [emailInput, passwordInputEl].filter(Boolean); // Filter out nulls if elements not found
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    this.classList.remove('border-red-500');
+                    if (errorMessageElement) errorMessageElement.classList.add('hidden');
+                }, { once: true });
+            });
+        }
+
+        // Función simulada para validar credenciales con la base de datos
+        // En una implementación real, esto haría una llamada a tu backend
+        async function validateCredentials(email, password) {
+            // Simulamos un retraso de red
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // Simulación: credenciales válidas si el email contiene "@tec.mx" y la contraseña tiene al menos 6 caracteres
+            // Esto es solo para demostración - en producción siempre validar con el backend
+            return email.includes("@tec.mx") && password.length >= 6;
         }
     </script>
 
