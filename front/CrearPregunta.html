@@ -3,305 +3,525 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Pregunta - tecdoit</title>
+    <title>Crear Pregunta - TecDoit</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Custom styles for the Inter and DM Sans fonts, and overall layout */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'DM Sans', sans-serif; /* Primary font from original CSS */
+            background-color: #f4f7fe; /* Background color from original CSS */
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            display: flex; /* Use flexbox for the main layout */
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll during transitions */
+            color: #707eae; /* Default text color from original CSS */
+            font-size: 0.875rem; /* Base font size, 14px */
         }
-        textarea {
-            resize: vertical; 
-            min-height: 10rem; 
-        }
-    </style>
-</head>
-<body class="relative w-full min-h-screen bg-gray-100 font-inter overflow-hidden flex">
 
+        /* Active link styling for sidebar */
+        .active-link {
+            background-color: #e0f2fe; /* Light blue background for active state */
+            color: #1d4ed8; /* Darker blue text color */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+
+        /* Custom transition for sidebar and main content */
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .main-content-transition {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Specific styles from CrearPreguntaSimple.module.css adapted or recreated */
+        .header-section {
+            background-color: #f4f7fe; /* Match body background */
+            padding: 10px;
+        }
+
+        .question-id-box {
+            background-color: #ded7fd;
+            border: 1px solid #8097ce;
+            border-radius: 3px;
+        }
+
+        /* Option circle base style */
+        .option-circle-base {
+            border: 1px solid #8097ce;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Option circle states */
+        .option-circle-correct {
+            background-color: #aae3ac; /* Green for correct option */
+        }
+        .option-circle-incorrect {
+            background-color: rgba(255, 77, 77, 0.4); /* Red for incorrect option */
+        }
+        .option-circle-neutral {
+            background-color: transparent; /* Transparent/default for neutral */
+        }
+
+
+        .btn-action {
+            border-radius: 15px;
+            background-color: #ded7fd;
+            border: 3px solid #8097ce;
+            overflow: hidden;
+            padding: 5px 15px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #0023a5;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-action:hover {
+            background-color: #c2b6f1;
+        }
+
+        .settings-checkbox-checked {
+            background-color: #6c7278;
+            border: 1.5px solid #6c7278;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-checkbox-unchecked {
+            background-color: rgba(255, 255, 255, 0);
+            border: 1.5px solid #6c7278;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-switch-bg {
+            width: 30px; /* Adjust as needed */
+            height: 16px; /* Adjust as needed */
+            background-color: #bbc4e1; /* Gray for off state */
+            border-radius: 9999px; /* Pill shape */
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .toggle-switch-circle {
+            width: 14px;
+            height: 14px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            transition: transform 0.2s;
+        }
+
+        .toggle-switch-bg.active {
+            background-color: #6648e7; /* Purple for on state */
+        }
+
+        .toggle-switch-bg.active .toggle-switch-circle {
+            transform: translateX(14px); /* Move circle to right */
+        }
+
+    </style>
+    <!-- Inter and Poppins fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="antialiased">
     <!-- Sidebar -->
-    <div class="hidden md:flex flex-col w-64 bg-white shadow-lg rounded-r-lg py-6 px-4">
-        <div class="mb-8 pb-4 border-b border-gray-200">
-            <div class="text-3xl font-bold text-gray-800">
-                <span class="text-blue-600">tec</span>doit
+    <div id="sidebar" class="w-64 flex-shrink-0 bg-white shadow-lg flex flex-col p-6 h-full min-h-screen fixed top-0 left-0 z-10 sidebar-transition">
+        <!-- Logo -->
+        <div class="logo mb-8">
+            <div class="text-2xl font-bold text-gray-800 font-poppins">
+                <b class="text-blue-600">tec</b><span>doit</span>
             </div>
         </div>
-        <nav class="flex-1 space-y-2">
-            <!-- Inicio Link -->
-            <a href="ListadoPreguntas.html" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                <div class="text-sm font-medium">inicio</div>
+
+        <!-- Separator -->
+        <div class="w-full h-px bg-gray-200 mb-8"></div>
+
+        <!-- Navigation Pages -->
+        <div class="pages flex flex-col gap-4">
+            <a href="ListadoPreguntas.html" class="dashboard flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-home text-gray-600"></i> <!-- Home icon -->
+                <div class="pagetitle5 font-semibold">inicio</div>
             </a>
-            <!-- Crear Pregunta Link - Active on this page -->
-            <a href="CrearPregunta.html" class="flex items-center p-3 rounded-lg bg-blue-100 text-blue-700 font-bold cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
-                <div class="text-sm">crear pregunta</div>
+            <a href="CrearPregunta.html" class="nftMarketplace flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200 active-link">
+                <i class="fas fa-plus-circle"></i> <!-- Plus icon -->
+                <div class="pagetitle font-semibold">crear pregunta</div>
             </a>
-            <!-- Revisión de Preguntas Link (Placeholder) -->
-            <a href="#" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-                <div class="text-sm font-medium">revisión de preguntas</div>
+            <a href="RevisarPregunta.html" class="kanban flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-eye"></i> <!-- Eye icon for review -->
+                <div class="pagetitle font-semibold">revisión de preguntas</div>
             </a>
-            <!-- Salir Link -->
-            <a href="login.html" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="17 16 22 12 17 8"/><line x1="22" x2="10" y1="12" y2="12"/></svg>
-                <div class="text-sm font-medium">salir</div>
+            <a href="Perfil.html" class="profile flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-user-circle"></i> <!-- Profile icon -->
+                <div class="pagetitle font-semibold">perfil</div>
             </a>
-        </nav>
-        <!-- User avatar/initials circle removed -->
-        <!-- <div class="mt-auto flex items-center justify-center pt-4 border-t border-gray-200">
-            <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold">IM</div>
-        </div> -->
+            <a href="login.html" class="authentication flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-sign-out-alt"></i> <!-- Logout icon -->
+                <div class="pagetitle font-semibold">salir</div>
+            </a>
+        </div>
+
+        <!-- Avatar -->
+        <div class="avatarStyle6 mt-auto pt-6 flex justify-center">
+            <img class="rounded-full h-12 w-12 object-cover" alt="User Avatar" src="https://placehold.co/128x128/aabbcc/ffffff?text=User" />
+        </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto">
-        <!-- Header / Breadcrumbs -->
-        <div class="flex justify-between items-center mb-6">
-            <div class="text-gray-500 text-sm">
-                <a href="ListadoPreguntas.html" class="hover:underline">inicio</a> / crear pregunta
-            </div>
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <input
-                        type="text"
-                        placeholder="buscar enunciado..."
-                        class="pl-10 pr-4 py-2 rounded-full bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <!-- Main Content Area -->
+    <div id="mainContent" class="flex-1 ml-64 p-8 main-content-transition">
+        <div class="crearpreguntasimple flex flex-col w-full h-full gap-5">
+            <!-- Header section -->
+            <div class="header flex justify-between items-center w-full pb-4">
+                <div class="indice flex-1">
+                    <div class="inicioCrearContainer text-sm text-gray-500 mb-2">
+                        <a href="ListadoPreguntas.html" class="inicio underline text-gray-500 hover:text-blue-600">inicio</a> / crear pregunta
+                    </div>
+                    <b class="crearPregunta text-3xl font-bold text-gray-800 leading-tight">crear pregunta</b>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 cursor-pointer"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 cursor-pointer"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.36 14H13.64a2 2 0 0 1-.97 1.74L12 16l-.37-.26a2 2 0 0 1-.97-1.74Z"/></svg>
-            </div>
-        </div>
-
-        <b class="text-2xl font-bold text-gray-800 mb-6">Crear Pregunta</b>
-
-        <div class="flex flex-col lg:flex-row gap-6 flex-1">
-            <!-- Question Editor Area -->
-            <div class="bg-white shadow-lg rounded-lg p-6 flex-1 flex flex-col">
-                <div class="flex items-center space-x-2 mb-4 pb-2 border-b border-gray-200 flex-wrap" id="formattingToolbar">
-                    <button title="Negrita" id="boldButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 12a4 4 0 0 0 0-8H6v16h6a4 4 0 0 0 0-8Z"/></svg>
+                <div class="flex items-center gap-4">
+                    <!-- Toggle Button -->
+                    <button id="sidebarToggle" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                        <i class="fas fa-bars text-gray-700"></i>
                     </button>
-                    <button title="Cursiva" id="italicButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>
-                    </button>
-                    <button title="Subrayado" id="underlineButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg>
-                    </button>
-                    <button title="Tachado" id="strikethroughButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4H8"/><line x1="5" x2="19" y1="12" y2="12"/><path d="M10 20h4"/></svg>
-                    </button>
-                    <button title="Código" id="codeButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                    </button>
-                    <button title="Enlace" id="linkButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07L9.5 9.5"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07L14.5 14.5"/></svg>
-                    </button>
-                    <button title="Imagen" id="imageButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                    </button>
-                    <button title="Lista desordenada" id="unorderedListButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
-                    </button>
-                    <button title="Lista ordenada" id="orderedListButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v.5a1 1 0 0 1-1 1H4"/><path d="M4 10h1v.5a1 1 0 0 1-1 1H4"/><path d="M4 16h1v.5a1 1 0 0 1-1 1H4"/></svg>
-                    </button>
-                    <button title="Tabla" id="tableButton" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 2v20"/><path d="M7 2v20"/><path d="M2 12h20"/><path d="M2 17h20"/><path d="M2 7h20"/></svg>
-                    </button>
-                    <button class="ml-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm">Visualizar</button>
+                    <!-- "tecdoit" logo in header -->
+                    <div class="text-xl font-bold text-gray-800 font-poppins">
+                        <b class="text-blue-600">tec</b><span>doit</span>
+                    </div>
+                    <!-- User avatar in header -->
+                    <img class="miscIcon rounded-full h-12 w-12 object-cover" alt="User Avatar" src="https://placehold.co/128x128/aabbcc/ffffff?text=User" />
                 </div>
-                <textarea id="questionTextarea" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 flex-grow" placeholder="Escribe tu pregunta aquí..."></textarea>
+            </div>
 
-                <div class="mt-6">
-                    <div class="text-gray-500 text-sm mb-2">ID de Pregunta: <span class="font-bold text-gray-800" id="previewQuestionId">2001</span></div>
-                    <div class="text-xl font-bold text-gray-800 mb-4" id="questionPreviewContent">¿Cuánto es 2 + 2?</div>
-                    <div class="text-gray-600 text-sm mb-4">Selecciona la opción correcta.</div>
-
-                    <div id="optionsContainer" class="space-y-3">
-                        <div class="flex items-center space-x-3 option-row">
-                            <button class="option-button w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold" data-option-letter="A" aria-label="Marcar opción A como correcta">A</button>
-                            <input type="text" value="4" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800" aria-label="Texto de opción A" />
+            <!-- Main Content: Questions, Write Area, Settings -->
+            <div class="content flex flex-col lg:flex-row gap-8 flex-grow">
+                <!-- Questions Panel -->
+                <div class="questions flex flex-col w-full lg:w-1/4 min-w-[250px] bg-gray-100 border-2 border-gray-400 rounded-xl p-4 shadow-inner">
+                    <button class="btnPublicarTodas btn-action mb-4">enviar todas</button>
+                    <div class="question bg-gray-300 rounded-lg p-3 flex items-center gap-2 mb-2">
+                        <div class="rectangleParent flex-shrink-0">
+                            <div class="question-id-box flex items-center justify-center w-12 h-6 text-xs font-bold text-blue-800">2001</div>
                         </div>
-                        <div class="flex items-center space-x-3 option-row">
-                            <button class="option-button w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-bold" data-option-letter="B" aria-label="Marcar opción B como correcta">B</button>
-                            <input type="text" value="3" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800" aria-label="Texto de opción B" />
+                        <div class="title text-base font-medium text-gray-800 truncate">Resuelve la siguiente...</div>
+                    </div>
+                    <div class="question1 bg-white rounded-lg p-3 flex items-center gap-2 mb-2">
+                        <div class="rectangleParent flex-shrink-0">
+                            <div class="question-id-box flex items-center justify-center w-12 h-6 text-xs font-bold text-blue-800">2012</div>
                         </div>
-                        <div class="flex items-center space-x-3 option-row">
-                            <button class="option-button w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-bold" data-option-letter="C" aria-label="Marcar opción C como correcta">C</button>
-                            <input type="text" value="2" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800" aria-label="Texto de opción C" />
+                        <div class="title text-base font-medium text-gray-800 truncate">¿Cuál es la raíz cuadra...</div>
+                    </div>
+                    <div class="question1 bg-white rounded-lg p-3 flex items-center gap-2 mb-4">
+                        <div class="rectangleParent flex-shrink-0">
+                            <div class="question-id-box flex items-center justify-center w-12 h-6 text-xs font-bold text-blue-800">2033</div>
+                        </div>
+                        <div class="title text-base font-medium text-gray-800 truncate">¿Cuáles son las posibl...</div>
+                    </div>
+                    <a href="#" id="addQuestionBtn" class="agregarPregunta text-blue-600 text-sm underline text-center mt-auto">Agregar pregunta</a>
+                </div>
+
+                <!-- Write Area -->
+                <div class="write flex flex-col w-full lg:w-1/2 min-w-[400px] relative">
+                    <div class="optionlist flex items-center gap-4 bg-gray-100 border-x-2 border-t-2 border-gray-400 rounded-t-lg p-2 absolute top-0 left-0 right-0 z-10">
+                        <div class="insertimage w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 cursor-pointer hover:bg-gray-300">
+                            <i class="fas fa-image text-gray-600"></i>
+                        </div>
+                        <div class="insertimage latex w-8 h-8 rounded-full flex items-center justify-center bg-gray-400 cursor-pointer hover:bg-gray-500">
+                            <!-- Custom SVG for LaTeX 'V' shape from TSX -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 16L9 2L17 16" />
+                            </svg>
+                        </div>
+                        <button class="btnVisualizar btn-action p-2 px-3 text-sm">visualizar</button>
+                    </div>
+                    <div class="board flex flex-col items-center justify-center bg-white border-x-2 border-b-2 border-gray-400 rounded-b-lg p-4 flex-grow pt-16">
+                        <div class="id flex items-center justify-end w-full max-w-sm ml-auto pr-2 text-blue-700 text-base font-bold">
+                            <b class="b3">2001</b>
+                            <i class="fas fa-arrow-right text-gray-500 ml-2"></i>
+                        </div>
+                        <div class="headerParent flex flex-col items-start gap-6 p-4 w-full max-w-lg mx-auto">
+                            <div class="header1">
+                                <textarea id="questionTextarea" class="title3 text-2xl font-bold text-gray-800 leading-tight block mb-2 w-full resize-none border-b border-gray-300 focus:outline-none focus:border-blue-500" rows="3">Resuelve la siguiente operación $2/3 + 3/5 =$</textarea>
+                                <div class="seleccionaLaOpcin text-gray-500 text-base">Selecciona la opción correcta.</div>
+                            </div>
+                            <div id="optionsContainer" class="frameParent flex flex-col gap-3 w-full text-center text-blue-800 text-sm">
+                                <!-- Option A -->
+                                <div class="optionParent flex items-center gap-3 bg-gray-100 border border-gray-400 rounded-md p-3 w-full cursor-pointer" data-correct="true">
+                                    <div class="option option-circle-base option-circle-correct">
+                                        <b class="text-blue-800 text-xs">A</b>
+                                    </div>
+                                    <input type="text" value="$19/5$" class="text-base text-gray-700 w-full bg-transparent focus:outline-none" />
+                                </div>
+                                <!-- Option B -->
+                                <div class="optionParent flex items-center gap-3 bg-gray-100 border border-gray-400 rounded-md p-3 w-full cursor-pointer">
+                                    <div class="option option-circle-base option-circle-incorrect">
+                                        <b class="text-blue-800 text-xs">B</b>
+                                    </div>
+                                    <input type="text" value="$5/8$" class="text-base text-gray-700 w-full bg-transparent focus:outline-none" />
+                                </div>
+                                <!-- Option C -->
+                                <div class="optionParent flex items-center gap-3 bg-gray-100 border border-gray-400 rounded-md p-3 w-full cursor-pointer">
+                                    <div class="option option-circle-base option-circle-incorrect">
+                                        <b class="text-blue-800 text-xs">C</b>
+                                    </div>
+                                    <input type="text" value="$2/5$" class="text-base text-gray-700 w-full bg-transparent focus:outline-none" />
+                                </div>
+                                <!-- Option D -->
+                                <div class="optionParent flex items-center gap-3 bg-gray-100 border border-gray-400 rounded-md p-3 w-full cursor-pointer">
+                                    <div class="option option-circle-base option-circle-incorrect">
+                                        <b class="text-blue-800 text-xs">D</b>
+                                    </div>
+                                    <input type="text" value="$6/15$" class="text-base text-gray-700 w-full bg-transparent focus:outline-none" />
+                                </div>
+                                <a href="#" id="addOptionBtn" class="agregarOpcin text-blue-600 text-base underline text-left mt-2">Agregar opción</a>
+                            </div>
                         </div>
                     </div>
-                    <button id="addOptionButton" class="px-4 py-2 rounded-lg bg-gray-100 text-blue-600 hover:bg-gray-200 font-medium mt-4 text-sm">Agregar opción</button>
+                </div>
+
+                <!-- Settings Panel -->
+                <div class="settings flex flex-col w-full lg:w-1/4 min-w-[250px] bg-gray-100 border-2 border-gray-400 rounded-xl p-4 shadow-inner">
+                    <button class="btnPublicarTodas1 btn-action mb-4">enviar</button>
+                    <div class="tituloConfiguraciones bg-white rounded-lg p-3 flex items-center justify-start mb-4">
+                        <b class="title4 text-lg font-bold text-gray-800">Configuraciones</b>
+                    </div>
+
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="title5 flex-1 text-base font-medium text-gray-700">Isla</div>
+                        <div class="option4 w-7 h-5 text-center text-blue-800 font-bold border border-gray-500 rounded-sm flex items-center justify-center">1</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="title5 flex-1 text-base font-medium text-gray-700">Dificultad</div>
+                        <div class="option4 w-7 h-5 text-center text-blue-800 font-bold border border-gray-500 rounded-sm flex items-center justify-center">1</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="title5 flex-1 text-base font-medium text-gray-700">Randomizar</div>
+                        <div class="toggle-switch-bg" onclick="toggleSwitch(this)">
+                            <div class="toggle-switch-circle"></div>
+                        </div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-4">
+                        <div class="title8 flex-1 text-base font-medium text-gray-700">Selección Múltiple (checkbox)</div>
+                        <div class="toggle-switch-bg" onclick="toggleSwitch(this)">
+                            <div class="toggle-switch-circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="tituloConfiguraciones bg-white rounded-lg p-3 flex items-center justify-start mb-4">
+                        <b class="title4 text-lg font-bold text-gray-800">Temas</b>
+                    </div>
+
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-checked">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                        <div class="title5 text-base font-medium text-gray-700">Fracciones</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Jerarquía</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Exponentes</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Expresiones</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Productos notables</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Factorización</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Fracciones algebraicas</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Ecuaciones</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Sistemas lineales</div>
+                    </div>
+                    <div class="isla flex items-center gap-3 p-2 mb-2">
+                        <div class="checkbox1 w-4 h-4 settings-checkbox-unchecked"></div>
+                        <div class="title5 text-base font-medium text-gray-700">Logaritmos</div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Settings Panel -->
-            <div class="bg-white shadow-lg rounded-lg p-6 w-full lg:w-80 flex-shrink-0 h-fit"> 
-                <b class="text-xl text-gray-800 mb-4 block pb-2 border-b border-gray-200">Configuraciones</b>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <div class="text-gray-700 font-medium text-sm">Selección Múltiple (checkbox)</div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" value="" class="sr-only peer" id="toggleCheckbox">
-                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                        </label>
-                    </div>
-
-                    <div class="flex justify-between items-center">
-                        <div class="text-gray-700 font-medium text-sm">Randomizar opciones</div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" value="" class="sr-only peer" id="toggleRandomize">
-                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                        </label>
-                    </div>
-                     <div class="mt-6 pt-4 border-t border-gray-200 space-y-3">
-                        <button class="w-full px-4 py-2.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-medium text-sm">Guardar Pregunta</button>
-                        <button class="w-full px-4 py-2.5 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 font-medium text-sm">Descartar Cambios</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="mt-8 text-center text-gray-500 text-sm">
-            <div class="flex justify-center space-x-4">
-                <a href="#" class="hover:underline">Licencia</a>
-                <a href="#" class="hover:underline">Términos de Uso</a>
-                <a href="#" class="hover:underline">Blog</a>
-            </div>
-            <div class="mt-2">© 2025 Tec DoIt. Todos los derechos reservados.</div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const optionsContainer = document.getElementById('optionsContainer');
-            let nextOptionLetterCode = 'D'.charCodeAt(0); 
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        let isSidebarOpen = true; // Initial state
 
-            function updateOptionButtonStyles(selectedButton) {
-                document.querySelectorAll('.option-button').forEach(button => {
-                    button.classList.remove('bg-blue-600', 'text-white');
-                    button.classList.add('bg-gray-200', 'text-gray-700');
-                    button.setAttribute('aria-pressed', 'false');
-                });
-                if (selectedButton) {
-                    selectedButton.classList.remove('bg-gray-200', 'text-gray-700');
-                    selectedButton.classList.add('bg-blue-600', 'text-white');
-                    selectedButton.setAttribute('aria-pressed', 'true');
+        function toggleSidebar() {
+            if (isSidebarOpen) {
+                // Hide sidebar: move it off-screen to the left
+                sidebar.style.transform = 'translateX(-100%)';
+                // Adjust main content margin to take full width
+                mainContent.style.marginLeft = '0';
+            } else {
+                // Show sidebar: move it back to its original position
+                sidebar.style.transform = 'translateX(0)';
+                // Adjust main content margin back to original
+                mainContent.style.marginLeft = '16rem'; /* Corresponds to w-64 (16rem) */
+            }
+            isSidebarOpen = !isSidebarOpen;
+        }
+
+        // Add event listener to the toggle button
+        sidebarToggle.addEventListener('click', toggleSidebar);
+
+        // Function to toggle switch state
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+        }
+
+        // Adjust layout on window load and resize for initial state and responsiveness
+        function adjustLayoutForScreenSize() {
+            if (window.innerWidth < 1024) { // Adjusted breakpoint for medium screens (lg: from Tailwind)
+                if (isSidebarOpen) {
+                    toggleSidebar(); // Hide sidebar by default on smaller screens
+                }
+            } else { // For larger screens (desktop)
+                if (!isSidebarOpen) {
+                    toggleSidebar(); // Ensure sidebar is visible by default on larger screens
                 }
             }
+        }
 
-            if (optionsContainer) {
-                optionsContainer.addEventListener('click', (event) => {
-                    const clickedButton = event.target.closest('.option-button');
-                    if (clickedButton) {
-                        updateOptionButtonStyles(clickedButton);
+        // Call the adjustment function on load and resize
+        window.addEventListener('load', adjustLayoutForScreenSize);
+        window.addEventListener('resize', adjustLayoutForScreenSize);
+
+        // --- New JavaScript for Question and Options functionality ---
+        const optionsContainer = document.getElementById('optionsContainer');
+        const addOptionBtn = document.getElementById('addOptionBtn');
+        const questionTextarea = document.getElementById('questionTextarea');
+
+        // Function to get the next option letter
+        function getNextOptionLetter() {
+            const currentOptions = optionsContainer.querySelectorAll('.optionParent');
+            const lastLetter = currentOptions.length > 0 ?
+                currentOptions[currentOptions.length - 1].querySelector('b').textContent.trim() :
+                '';
+            if (lastLetter === '') return 'A';
+            const nextChar = String.fromCharCode(lastLetter.charCodeAt(0) + 1);
+            return nextChar;
+        }
+
+        // Function to create a new option element
+        function createOptionElement(letter, value = '', isCorrect = false) {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'optionParent flex items-center gap-3 bg-gray-100 border border-gray-400 rounded-md p-3 w-full cursor-pointer';
+            if (isCorrect) {
+                optionDiv.setAttribute('data-correct', 'true');
+            }
+
+            optionDiv.innerHTML = `
+                <div class="option option-circle-base ${isCorrect ? 'option-circle-correct' : 'option-circle-neutral'}">
+                    <b class="text-blue-800 text-xs">${letter}</b>
+                </div>
+                <input type="text" value="${value}" class="text-base text-gray-700 w-full bg-transparent focus:outline-none" />
+            `;
+            // Add click listener to the newly created option
+            optionDiv.addEventListener('click', handleOptionClick);
+            return optionDiv;
+        }
+
+        // Handle option click to mark as correct/incorrect
+        function handleOptionClick(event) {
+            const clickedOption = event.currentTarget; // The .optionParent div
+
+            // Check if this option is currently marked as correct
+            const wasCorrect = clickedOption.getAttribute('data-correct') === 'true';
+
+            // Remove correct and incorrect classes from all options
+            optionsContainer.querySelectorAll('.optionParent').forEach(option => {
+                option.setAttribute('data-correct', 'false'); // Reset data-correct attribute
+                const circle = option.querySelector('.option-circle-base');
+                circle.classList.remove('option-circle-correct', 'option-circle-incorrect');
+                circle.classList.add('option-circle-neutral'); // Ensure it's neutral
+            });
+
+            if (!wasCorrect) {
+                // If the clicked option was not correct, make it correct
+                clickedOption.setAttribute('data-correct', 'true');
+                const circle = clickedOption.querySelector('.option-circle-base');
+                circle.classList.remove('option-circle-neutral');
+                circle.classList.add('option-circle-correct');
+
+                // Make all other options incorrect
+                optionsContainer.querySelectorAll('.optionParent').forEach(option => {
+                    if (option !== clickedOption) {
+                        const otherCircle = option.querySelector('.option-circle-base');
+                        otherCircle.classList.remove('option-circle-neutral');
+                        otherCircle.classList.add('option-circle-incorrect');
                     }
                 });
-            }
-
-            const addOptionButton = document.getElementById('addOptionButton');
-            if (addOptionButton) {
-                addOptionButton.addEventListener('click', () => {
-                    const newLetter = String.fromCharCode(nextOptionLetterCode);
-                    const newOptionRow = document.createElement('div');
-                    newOptionRow.className = 'flex items-center space-x-3 option-row';
-                    newOptionRow.innerHTML = `
-                        <button class="option-button w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-bold" data-option-letter="${newLetter}" aria-label="Marcar opción ${newLetter} como correcta" aria-pressed="false">${newLetter}</button>
-                        <input type="text" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800" placeholder="Escribe la opción ${newLetter} aquí..." aria-label="Texto de opción ${newLetter}" />
-                    `;
-                    if (optionsContainer) {
-                        optionsContainer.appendChild(newOptionRow);
-                    }
-                    nextOptionLetterCode++; 
+            } else {
+                // If it was already correct, clicking it makes all neutral (deselect)
+                optionsContainer.querySelectorAll('.optionParent').forEach(option => {
+                    const circle = option.querySelector('.option-circle-base');
+                    circle.classList.remove('option-circle-correct', 'option-circle-incorrect');
+                    circle.classList.add('option-circle-neutral');
                 });
             }
+        }
 
-            const questionTextarea = document.getElementById('questionTextarea');
-            const questionPreviewContent = document.getElementById('questionPreviewContent');
-
-            if (questionTextarea && questionPreviewContent) {
-                questionTextarea.addEventListener('input', (event) => {
-                    questionPreviewContent.textContent = event.target.value.split('\n')[0] || 'Vista previa de la pregunta...'; 
-                });
-            }
-            
-            function applyFormatting(tagStart, tagEnd = tagStart.replace('<', '</')) { 
-                if (!questionTextarea) return;
-
-                const start = questionTextarea.selectionStart;
-                const end = questionTextarea.selectionEnd;
-                const selectedText = questionTextarea.value.substring(start, end);
-                const before = questionTextarea.value.substring(0, start);
-                const after = questionTextarea.value.substring(end, questionTextarea.value.length);
-                let replacement = tagStart + selectedText + tagEnd;
-                if (selectedText === '' && (tagStart === '<b>' || tagStart === '<i>' || tagStart === '<u>' || tagStart === '<s>' || tagStart === '<code>')) {
-                    replacement = tagStart + tagEnd;
-                }
-
-                questionTextarea.value = before + replacement + after;
-                questionTextarea.focus();
-
-                if (selectedText === '') {
-                     questionTextarea.setSelectionRange(start + tagStart.length, start + tagStart.length);
-                } else {
-                    questionTextarea.setSelectionRange(start + tagStart.length, start + tagStart.length + selectedText.length);
-                }
-                if(questionPreviewContent) questionPreviewContent.textContent = questionTextarea.value.split('\n')[0] || 'Vista previa de la pregunta...';
-            }
-
-            document.getElementById('boldButton')?.addEventListener('click', () => applyFormatting('<b>', '</b>'));
-            document.getElementById('italicButton')?.addEventListener('click', () => applyFormatting('<i>', '</i>'));
-            document.getElementById('underlineButton')?.addEventListener('click', () => applyFormatting('<u>', '</u>'));
-            document.getElementById('strikethroughButton')?.addEventListener('click', () => applyFormatting('<s>', '</s>'));
-            document.getElementById('codeButton')?.addEventListener('click', () => applyFormatting('<code>', '</code>'));
-            
-            document.getElementById('linkButton')?.addEventListener('click', () => {
-                const url = prompt("Introduce la URL del enlace:", "http://");
-                if (url) {
-                    applyFormatting(`<a href="${url}" target="_blank">`, `</a>`);
-                }
-            });
-            document.getElementById('imageButton')?.addEventListener('click', () => {
-                 const imageUrl = prompt("Introduce la URL de la imagen:", "http://");
-                 if(imageUrl){
-                    applyFormatting(`<img src="${imageUrl}" alt="imagen descriptiva" style="max-width:100%; height:auto;">`, '');
-                 }
-            });
-            document.getElementById('unorderedListButton')?.addEventListener('click', () => {
-                applyFormatting("<ul>\n  <li>Elemento 1</li>\n  <li>Elemento 2</li>\n</ul>", '');
-            });
-            document.getElementById('orderedListButton')?.addEventListener('click', () => {
-                applyFormatting("<ol>\n  <li>Primer elemento</li>\n  <li>Segundo elemento</li>\n</ol>", '');
-            });
-            document.getElementById('tableButton')?.addEventListener('click', () => {
-                applyFormatting(
-                    "<table>\n  <thead>\n    <tr>\n      <th>Cabecera 1</th>\n      <th>Cabecera 2</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Dato 1</td>\n      <td>Dato 2</td>\n    </tr>\n  </tbody>\n</table>",
-                    ''
-                );
-            });
-
-            const toggleCheckbox = document.getElementById('toggleCheckbox');
-            const toggleRandomize = document.getElementById('toggleRandomize');
-
-            if (toggleCheckbox) {
-                toggleCheckbox.addEventListener('change', (event) => {
-                    console.log('Selección Múltiple (checkbox) toggled:', event.target.checked);
-                });
-            }
-            if (toggleRandomize) {
-                toggleRandomize.addEventListener('change', (event) => {
-                    console.log('Randomizar opciones toggled:', event.target.checked);
-                });
-            }
+        // Add event listener for "Agregar opción" button
+        addOptionBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            const nextLetter = getNextOptionLetter();
+            const newOption = createOptionElement(nextLetter);
+            // Insert new option before the "Agregar opción" link
+            optionsContainer.insertBefore(newOption, addOptionBtn);
         });
+
+        // Initialize click listeners for existing options on load
+        document.querySelectorAll('.optionParent').forEach(option => {
+            option.addEventListener('click', handleOptionClick);
+        });
+
+        // Initial styling for the first option (if it's marked as correct)
+        const initialCorrectOption = document.querySelector('.optionParent[data-correct="true"]');
+        if (initialCorrectOption) {
+             // Simulate a click to apply correct initial styling and mark others incorrect
+             handleOptionClick({ currentTarget: initialCorrectOption });
+        } else {
+            // Ensure all initial options without data-correct="true" are neutral
+            document.querySelectorAll('.optionParent').forEach(option => {
+                const circle = option.querySelector('.option-circle-base');
+                if (!option.getAttribute('data-correct') || option.getAttribute('data-correct') === 'false') {
+                    circle.classList.remove('option-circle-correct', 'option-circle-incorrect');
+                    circle.classList.add('option-circle-neutral');
+                }
+            });
+        }
+
     </script>
 </body>
 </html>
