@@ -3,265 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Preguntas - tecdoit</title>
+    <title>Listado de Preguntas - TecDoit</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Custom styles for the Inter and DM Sans fonts, and overall layout */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'DM Sans', sans-serif; /* Primary font from original CSS */
+            background-color: #f7f7f7;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll during transitions */
+            color: #707eae; /* Default text color from original CSS */
+            font-size: 0.875rem; /* Base font size, 14px */
         }
-        /* Ensure sticky header in table stays on top */
-        .sticky-table-header {
-            position: sticky;
-            top: 0;
-            z-index: 10; /* Ensures it's above other content */
+
+        /* Active link styling for sidebar */
+        .active-link {
+            background-color: #e0f2fe; /* Light blue background for active state */
+            color: #1d4ed8; /* Darker blue text color */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+
+        /* Custom transition for sidebar and main content */
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .main-content-transition {
+            transition: margin-left 0.3s ease-in-out;
         }
     </style>
+    <!-- DM Sans and Poppins fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Phosphor Icons for a more modern icon set (example usage) -->
+    <!-- <script src="https://unpkg.com/phosphor-icons"></script> -->
 </head>
-<body class="relative w-full min-h-screen bg-gray-100 font-inter overflow-hidden flex">
-
+<body class="antialiased">
     <!-- Sidebar -->
-    <div class="hidden md:flex flex-col w-64 bg-white shadow-lg rounded-r-lg py-6 px-4">
-        <div class="mb-8 pb-4 border-b border-gray-200">
-            <div class="text-3xl font-bold text-gray-800">
-                <span class="text-blue-600">tec</span>doit
-            </div>
-        </div>
-        <nav class="flex-1 space-y-2">
-            <!-- Inicio Link - Active on this page -->
-            <a href="ListadoPreguntas.html" class="flex items-center p-3 rounded-lg bg-blue-100 text-blue-700 font-bold cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                <div class="text-sm">inicio</div>
-            </a>
-            <!-- Crear Pregunta Link -->
-            <a href="CrearPregunta.html" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
-                <div class="text-sm font-medium">crear pregunta</div>
-            </a>
-            <!-- Revisión de Preguntas Link (Placeholder) -->
-            <a href="#" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-                <div class="text-sm font-medium">revisión de preguntas</div>
-            </a>
-            <!-- Salir Link -->
-            <a href="login.html" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="17 16 22 12 17 8"/><line x1="22" x2="10" y1="12" y2="12"/></svg>
-                <div class="text-sm font-medium">salir</div>
-            </a>
-        </nav>
-        <!-- User avatar/initials circle removed -->
-        <!-- <div class="mt-auto flex items-center justify-center pt-4 border-t border-gray-200">
-            <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold">IM</div>
-        </div> -->
-    </div>
-
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto">
-        <!-- Header / Breadcrumbs -->
-        <div class="flex justify-between items-center mb-6">
-            <div class="text-gray-500 text-sm">
-                <a href="ListadoPreguntas.html" class="hover:underline">inicio</a> / listado de preguntas
-            </div>
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <input
-                        type="text"
-                        placeholder="buscar enunciado..."
-                        class="pl-10 pr-4 py-2 rounded-full bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 cursor-pointer"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 cursor-pointer"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.36 14H13.64a2 2 0 0 1-.97 1.74L12 16l-.37-.26a2 2 0 0 1-.97-1.74Z"/></svg>
+    <div id="sidebar" class="w-64 flex-shrink-0 bg-white shadow-lg flex flex-col p-6 h-full min-h-screen fixed top-0 left-0 z-10 sidebar-transition">
+        <!-- Logo -->
+        <div class="logo mb-8">
+            <div class="text-2xl font-bold text-gray-800 font-poppins">
+                <b class="text-blue-600">tec</b><span>doit</span>
             </div>
         </div>
 
-        <b class="text-2xl font-bold text-gray-800 mb-6">Listado de Preguntas</b>
+        <!-- Separator -->
+        <div class="w-full h-px bg-gray-200 mb-8"></div>
 
-        <!-- Questions Table Container -->
-        <div class="bg-white shadow-lg rounded-lg p-6 flex-1 overflow-auto">
-            <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200">
-                <b class="text-xl text-gray-800">Preguntas</b>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500 cursor-pointer"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-            </div>
-
-            <!-- Table Header -->
-            <div class="grid grid-cols-12 gap-4 text-gray-500 font-semibold text-xs uppercase py-3 border-b border-gray-200 bg-white sticky-table-header">
-                <div class="col-span-1 flex items-center pl-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6v12"/><path d="M15 6v12"/></svg>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    ID <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="col-span-3 flex items-center">
-                    Enunciado <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    Tipo <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    Dificultad <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    Isla <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    Temas <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    Estado <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    Modificado <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
-                <div class="col-span-1 flex items-center justify-end pr-2">
-                    Acciones
-                </div>
-            </div>
-
-            <!-- Questions Data Rows -->
-            <div id="questions-container">
-                <div id="loading-message" class="flex items-center justify-center py-8">
-                    <p class="text-lg text-gray-700">Cargando preguntas...</p>
-                </div>
-                <div id="error-message-container" class="hidden flex items-center justify-center py-8 bg-red-100 rounded-lg">
-                    <p class="text-lg text-red-700" id="error-text-message"></p>
-                </div>
-            </div>
-
-            <!-- Pagination -->
-            <div class="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
-                <div class="text-sm text-gray-600">Página 1 de 5</div> <!-- Placeholder -->
-                <div class="flex items-center space-x-2">
-                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform rotate-90"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <button class="p-2 rounded-full hover:bg-gray-200 text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform -rotate-90"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                </div>
-            </div>
+        <!-- Navigation Pages -->
+        <div class="pages flex flex-col gap-4">
+            <a href="ListadoPreguntas.html" class="dashboard flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200 active-link">
+                <i class="fas fa-home text-blue-600"></i> <!-- Home icon -->
+                <div class="pagetitle5 font-semibold">inicio</div>
+            </a>
+            <a href="CrearPregunta.html" class="nftMarketplace flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-plus-circle"></i> <!-- Plus icon -->
+                <div class="pagetitle font-semibold">crear pregunta</div>
+            </a>
+            <a href="RevisarPregunta.html" class="kanban flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-eye"></i> <!-- Eye icon for review -->
+                <div class="pagetitle font-semibold">revisión de preguntas</div>
+            </a>
+            <a href="Perfil.html" class="profile flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-user-circle"></i> <!-- Profile icon -->
+                <div class="pagetitle font-semibold">perfil</div>
+            </a>
+            <a href="login.html" class="authentication flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-sign-out-alt"></i> <!-- Logout icon -->
+                <div class="pagetitle font-semibold">salir</div>
+            </a>
         </div>
 
-        <!-- Floating Action Button to Create Question -->
-        <a href="CrearPregunta.html" class="fixed bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300" aria-label="Crear nueva pregunta">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
-        </a>
-
-        <!-- Footer -->
-        <div class="mt-8 text-center text-gray-500 text-sm">
-            <div class="flex justify-center space-x-4">
-                <a href="#" class="hover:underline">Licencia</a>
-                <a href="#" class="hover:underline">Términos de Uso</a>
-                <a href="#" class="hover:underline">Blog</a>
-            </div>
-            <div class="mt-2">© 2025 Tec DoIt. Todos los derechos reservados.</div>
+        <!-- Avatar (positioned absolutely at the bottom for fixed sidebar) -->
+        <div class="avatarStyle6 mt-auto pt-6 flex justify-center">
+            <img class="rounded-full h-12 w-12 object-cover" alt="User Avatar" src="https://placehold.co/128x128/aabbcc/ffffff?text=User" />
         </div>
     </div>
+
+    <!-- Main Content Area -->
+    <div id="mainContent" class="flex-1 ml-64 p-8 main-content-transition"> <!-- Adjust ml-64 to match sidebar width -->
+        <div class="mainDashboard flex flex-col w-full">
+            <!-- Breadcrumbs -->
+            <div class="inicioListado text-sm text-gray-500 mb-2">inicio / listado de preguntas</div>
+            <b class="listadoDePreguntas text-3xl font-bold text-gray-800 mb-8">listado de preguntas</b>
+
+            <!-- Header for search and notifications -->
+            <div class="misc flex items-center justify-end gap-4 mb-8">
+                <!-- Toggle Button -->
+                <button id="sidebarToggle" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                    <i class="fas fa-bars text-gray-700"></i>
+                </button>
+                <!-- Search Input -->
+                <div class="largeInput relative w-full max-w-xs">
+                    <input type="text" placeholder="buscar enunciado..." class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-400">
+                    <i class="fas fa-search absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"></i>
+                </div>
+                <!-- Notifications and Moon Icon -->
+                <i class="fas fa-bell text-gray-500 text-xl cursor-pointer hover:text-gray-700 transition duration-200"></i>
+                <i class="fas fa-moon text-gray-500 text-xl cursor-pointer hover:text-gray-700 transition duration-200"></i>
+            </div>
+
+            <!-- Table Section -->
+            <div class="fillHere bg-white shadow-lg rounded-xl p-6 mb-8">
+                <div class="largeCheckTableWrapper">
+                    <div class="largeCheckTable w-full">
+                        <div class="title flex justify-between items-center pb-4 border-b border-gray-200 mb-4">
+                            <b class="title1 text-xl font-bold text-gray-800">Preguntas</b>
+                            <!-- More icon (three vertical dots) -->
+                            <i class="fas fa-ellipsis-v text-gray-500 cursor-pointer"></i>
+                        </div>
+
+                        <!-- Table Header -->
+                        <div class="header grid grid-cols-10 gap-4 py-3 border-b border-gray-200 text-sm font-semibold text-gray-600">
+                            <div class="flex items-center col-span-1">
+                                <input type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <i class="fas fa-arrows-alt text-gray-400 ml-2"></i> <!-- Drag icon -->
+                            </div>
+                            <div class="category flex items-center col-span-1">
+                                <div class="label">ID</div>
+                                <i class="fas fa-sort-down text-gray-400 ml-1"></i>
+                            </div>
+                            <div class="category1 flex items-center col-span-3">
+                                <div class="label">enunciado</div>
+                                <i class="fas fa-sort-down text-gray-400 ml-1"></i>
+                            </div>
+                            <div class="category6 flex items-center col-span-1">
+                                <div class="label">tipo</div>
+                                <i class="fas fa-sort-down text-gray-400 ml-1"></i>
+                            </div>
+                            <div class="category4 flex items-center col-span-1">
+                                <div class="label">dificultad</div>
+                                <i class="fas fa-sort-down text-gray-400 ml-1"></i>
+                            </div>
+                            <div class="category5 flex items-center col-span-1">
+                                <div class="label">isla</div>
+                                <i class="fas fa-sort-down text-gray-400 ml-1"></i>
+                            </div>
+                            <div class="category7 flex items-center col-span-1">
+                                <div class="label">temas</div>
+                                <i class="fas fa-sort-down text-gray-400 ml-1"></i>
+                            </div>
+                            <div class="category2 flex items-center col-span-1">
+                                <div class="label">estado</div>
+                                <i class="fas fa-sort-down text-gray-400 ml-1"></i>
+                            </div>
+                            <div class="category3 flex items-center col-span-1">
+                                <div class="label">modificado</div>
+                                <i class="fas fa-sort-down text-gray-400 ml-1"></i>
+                            </div>
+                            <div class="category actions-header flex items-center col-span-1">
+                                <div class="label">Acciones</div>
+                            </div>
+                        </div>
+
+                        <!-- Table Rows (Example Data) -->
+                        <div class="frameGroup grid grid-cols-10 gap-4 py-4 border-b border-gray-100 text-sm text-gray-700 items-center">
+                            <div class="flex items-center col-span-1">
+                                <input type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <i class="fas fa-grip-vertical text-gray-400 ml-2"></i> <!-- Drag handle -->
+                            </div>
+                            <div class="content3 col-span-1">2001</div>
+                            <div class="explicaDetalladamenteLa col-span-3">Explica detalladamente la diferencia entre una fracción propia, una fracción...</div>
+                            <div class="opcinMltiple col-span-1">Opción Múltiple</div>
+                            <div class="fcil col-span-1">Fácil</div>
+                            <div class="div1 col-span-1">1.1</div>
+                            <div class="topicParent flex gap-2 col-span-1">
+                                <div class="topic bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">fracciones</div>
+                                <div class="topic1 bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">...</div>
+                            </div>
+                            <div class="publicada col-span-1">Publicada</div>
+                            <div class="content1 col-span-1">05-03-2025</div>
+                            <div class="heroiconseyeSolidParent flex gap-2 col-span-1">
+                                <i class="fas fa-eye text-blue-600 cursor-pointer hover:text-blue-800"></i>
+                                <i class="fas fa-edit text-yellow-600 cursor-pointer hover:text-yellow-800"></i>
+                                <i class="fas fa-trash-alt text-red-600 cursor-pointer hover:text-red-800"></i>
+                            </div>
+                        </div>
+
+                        <div class="frameGroup grid grid-cols-10 gap-4 py-4 border-b border-gray-100 text-sm text-gray-700 items-center">
+                            <div class="flex items-center col-span-1">
+                                <input type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <i class="fas fa-grip-vertical text-gray-400 ml-2"></i>
+                            </div>
+                            <div class="content3 col-span-1">2012</div>
+                            <div class="explicaDetalladamenteLa col-span-3">Resuelve paso a paso la siguiente expresión con jerarquía de operaciones, ...</div>
+                            <div class="opcinMltiple col-span-1">Checkbox</div>
+                            <div class="fcil col-span-1">Medio</div>
+                            <div class="div1 col-span-1">1.2</div>
+                            <div class="topicParent flex gap-2 col-span-1">
+                                <div class="topic2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">algebra</div>
+                                <div class="topic1 bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">...</div>
+                            </div>
+                            <div class="publicada col-span-1">En Revisión</div>
+                            <div class="content1 col-span-1">06-03-2025</div>
+                            <div class="heroiconseyeSolidParent flex gap-2 col-span-1">
+                                <i class="fas fa-eye text-blue-600 cursor-pointer hover:text-blue-800"></i>
+                                <i class="fas fa-edit text-yellow-600 cursor-pointer hover:text-yellow-800"></i>
+                                <i class="fas fa-trash-alt text-red-600 cursor-pointer hover:text-red-800"></i>
+                            </div>
+                        </div>
+
+                        <div class="frameGroup grid grid-cols-10 gap-4 py-4 border-b border-gray-100 text-sm text-gray-700 items-center">
+                            <div class="flex items-center col-span-1">
+                                <input type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                <i class="fas fa-grip-vertical text-gray-400 ml-2"></i>
+                            </div>
+                            <div class="content3 col-span-1">2013</div>
+                            <div class="explicaDetalladamenteLa col-span-3">Escribe todas las leyes de los exponentes (producto, cociente, potencia de ...</div>
+                            <div class="opcinMltiple col-span-1">Checkbox</div>
+                            <div class="fcil col-span-1">Difícil</div>
+                            <div class="div1 col-span-1">1.3</div>
+                            <div class="topicParent flex gap-2 col-span-1">
+                                <div class="topic4 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">exponentes</div>
+                                <div class="topic1 bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">...</div>
+                            </div>
+                            <div class="publicada col-span-1">Rechazada</div>
+                            <div class="content1 col-span-1">07-03-2025</div>
+                            <div class="heroiconseyeSolidParent flex gap-2 col-span-1">
+                                <i class="fas fa-eye text-blue-600 cursor-pointer hover:text-blue-800"></i>
+                                <i class="fas fa-edit text-yellow-600 cursor-pointer hover:text-yellow-800"></i>
+                                <i class="fas fa-trash-alt text-red-600 cursor-pointer hover:text-red-800"></i>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="category8 flex justify-end items-center gap-4 py-4 text-sm text-gray-700">
+                            <div class="label8">Página 1 de 5</div>
+                            <i class="fas fa-chevron-left text-gray-500 cursor-pointer hover:text-gray-700"></i>
+                            <i class="fas fa-chevron-right text-gray-500 cursor-pointer hover:text-gray-700"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer flex justify-center items-center gap-4 text-sm text-gray-500 mt-auto pt-8">
+                <div class="tecDoitTodos">© 2025 Tec DoIt. Todos los derechos reservados.</div>
+                <div class="licencia hover:underline cursor-pointer">Licencia</div>
+                <div class="trminosDeUso hover:underline cursor-pointer">Términos de Uso</div>
+                <div class="blog hover:underline cursor-pointer">Blog</div>
+            </div>
+        </div>
+    </div>
+    <!-- Add button (gg:add.svg) - positioned absolutely -->
+    <button class="ggaddIcon fixed bottom-8 right-8 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition duration-300">
+        <i class="fas fa-plus text-2xl"></i>
+    </button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const questionsContainer = document.getElementById('questions-container');
-            const loadingMessage = document.getElementById('loading-message');
-            const errorMessageContainer = document.getElementById('error-message-container'); 
-            const errorTextMessage = document.getElementById('error-text-message'); 
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        let isSidebarOpen = true; // Initial state
 
-            const fetchQuestions = async () => {
-                if (loadingMessage) loadingMessage.classList.remove('hidden');
-                if (errorMessageContainer) errorMessageContainer.classList.add('hidden');
-                
-                // Ensure questionsContainer is available before manipulating its content
-                if (questionsContainer) {
-                    questionsContainer.innerHTML = ''; // Clear previous content
-                    // Re-add loading message if it was cleared
-                    if (loadingMessage) {
-                        questionsContainer.appendChild(loadingMessage);
-                        loadingMessage.classList.remove('hidden'); // Make sure it's visible
-                    }
-                } else {
-                    console.error("Error: questionsContainer no encontrado.");
-                    if (loadingMessage) loadingMessage.classList.add('hidden'); // Hide loading if container missing
-                    return; 
+        function toggleSidebar() {
+            if (isSidebarOpen) {
+                // Hide sidebar: move it off-screen to the left
+                sidebar.style.transform = 'translateX(-100%)';
+                // Adjust main content margin to take full width
+                mainContent.style.marginLeft = '0';
+            } else {
+                // Show sidebar: move it back to its original position
+                sidebar.style.transform = 'translateX(0)';
+                // Adjust main content margin back to original
+                mainContent.style.marginLeft = '16rem'; /* Corresponds to w-64 (16rem) */
+            }
+            isSidebarOpen = !isSidebarOpen;
+        }
+
+        // Add event listener to the toggle button
+        sidebarToggle.addEventListener('click', toggleSidebar);
+
+        // Adjust layout on window load and resize for initial state and responsiveness
+        function adjustLayoutForScreenSize() {
+            if (window.innerWidth < 1024) { // Adjusted breakpoint for medium screens (lg: from Tailwind)
+                if (isSidebarOpen) {
+                    toggleSidebar(); // Hide sidebar by default on smaller screens
                 }
-
-
-                try {
-                    const response = await fetch('http://127.0.0.1:5000/questions');
-                    if (!response.ok) {
-                        throw new Error(`Error de red: ${response.status} ${response.statusText}`);
-                    }
-                    const data = await response.json();
-                    
-                    if (loadingMessage) loadingMessage.classList.add('hidden'); 
-                    
-                    if (data.length === 0) {
-                        if (questionsContainer) questionsContainer.innerHTML = '<p class="text-center text-gray-600 py-8">No hay preguntas disponibles.</p>';
-                        return;
-                    }
-
-                    if (questionsContainer) questionsContainer.innerHTML = ''; 
-
-                    data.forEach(question => {
-                        const row = document.createElement('div');
-                        row.className = 'grid grid-cols-12 gap-4 items-center text-gray-800 text-sm py-3 border-b border-gray-100 hover:bg-gray-50';
-                        
-                        const statusClass = question.estado === 'Publicada' ? 'bg-green-100 text-green-700' :
-                                            question.estado === 'En Revisión' ? 'bg-yellow-100 text-yellow-700' :
-                                            'bg-red-100 text-red-700';
-
-                        row.innerHTML = `
-                            <div class="col-span-1 flex items-center pl-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-400"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M9 6v12"/><path d="M15 6v12"/></svg>
-                            </div>
-                            <div class="col-span-1">${question.idPregunta || 'N/A'}</div>
-                            <div class="col-span-3 truncate" title="${question.textoPregunta || ''}">${question.textoPregunta || 'Sin enunciado'}</div>
-                            <div class="col-span-1">${question.tipo || 'N/A'}</div>
-                            <div class="col-span-1">${question.nivelDificultad || 'N/A'}</div>
-                            <div class="col-span-1">${question.isla !== null && typeof question.isla !== 'undefined' ? question.isla : 'N/A'}</div>
-                            <div class="col-span-1 flex flex-wrap gap-1">
-                                ${question.tema ? `<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">${question.tema}</span>` : ''}
-                            </div>
-                            <div class="col-span-1">
-                                <span class="px-2 py-0.5 rounded-full text-xs font-medium ${statusClass}">
-                                    ${question.estado || 'N/A'}
-                                </span>
-                            </div>
-                            <div class="col-span-1">${question.fechaModificacion || 'N/A'}</div>
-                            <div class="col-span-1 flex items-center space-x-2 justify-end pr-2">
-                                <button aria-label="Ver pregunta" class="text-gray-500 cursor-pointer hover:text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
-                                <button aria-label="Editar pregunta" class="text-gray-500 cursor-pointer hover:text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/><path d="m15 5-3 3"/></svg></button>
-                                <button aria-label="Eliminar pregunta" class="text-gray-500 cursor-pointer hover:text-red-600"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
-                            </div>
-                        `;
-                        if (questionsContainer) questionsContainer.appendChild(row);
-                    });
-
-                } catch (e) {
-                    if (loadingMessage) loadingMessage.classList.add('hidden');
-                    if (errorMessageContainer) errorMessageContainer.classList.remove('hidden');
-                    if (errorTextMessage) errorTextMessage.textContent = `Error al cargar las preguntas: ${e.message}. Asegúrate de que el backend esté corriendo en http://127.0.0.1:5000.`;
-                    console.error("Error fetching questions:", e);
-                    if (questionsContainer) {
-                        questionsContainer.innerHTML = ''; 
-                        // Make sure errorMessageContainer is defined before appending
-                        if (errorMessageContainer) {
-                             questionsContainer.appendChild(errorMessageContainer); 
-                        } else {
-                            questionsContainer.innerHTML = '<p class="text-center text-red-700 py-8">Error al cargar las preguntas y contenedor de errores no encontrado.</p>';
-                        }
-                    }
+            } else { // For larger screens (desktop)
+                if (!isSidebarOpen) {
+                    toggleSidebar(); // Ensure sidebar is visible by default on larger screens
                 }
-            };
+            }
+        }
 
-            fetchQuestions();
-        });
+        // Call the adjustment function on load and resize
+        window.addEventListener('load', adjustLayoutForScreenSize);
+        window.addEventListener('resize', adjustLayoutForScreenSize);
     </script>
 </body>
 </html>
