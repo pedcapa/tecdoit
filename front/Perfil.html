@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - TecDoit</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the DM Sans and Poppins fonts, and overall layout */
+        body {
+            font-family: 'DM Sans', sans-serif; /* Primary font from original CSS */
+            background-color: #f4f7fe; /* Background color from original CSS */
+            margin: 0;
+            display: flex; /* Use flexbox for the main layout */
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll during transitions */
+            color: #707eae; /* Default text color from original CSS */
+            font-size: 0.875rem; /* Base font size, 14px */
+        }
+
+        /* Active link styling for sidebar */
+        .active-link {
+            background-color: #e0f2fe; /* Light blue background for active state */
+            color: #1d4ed8; /* Darker blue text color */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+
+        /* Custom transition for sidebar and main content */
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .main-content-transition {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Styles for the profile card */
+        .profile-card {
+            box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.15);
+            border-radius: 24px;
+            background-color: #e8ecf6;
+            border: 2px solid #8e99b5;
+            padding: 40px; /* Adjust padding as needed */
+            text-align: center;
+        }
+
+        /* Editable text styles */
+        .editable-text {
+            background-color: transparent;
+            border: none;
+            text-align: center;
+            outline: none;
+            width: 100%;
+            display: inline-block; /* Allows width to be set */
+            padding: 5px; /* Add some padding for easier editing */
+            border-bottom: 1px dashed #ccc; /* Subtle indicator it's editable */
+            transition: border-bottom 0.2s;
+        }
+        .editable-text:focus {
+            border-bottom: 1px solid #6648e7; /* Highlight on focus */
+        }
+
+        textarea.editable-text {
+            resize: vertical;
+            min-height: 100px; /* Minimum height for bio */
+            text-align: left;
+        }
+        .italic-light {
+            font-style: italic;
+            font-weight: 200;
+        }
+    </style>
+    <!-- DM Sans and Poppins fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="antialiased">
+    <!-- Sidebar -->
+    <div id="sidebar" class="w-64 flex-shrink-0 bg-white shadow-lg flex flex-col p-6 h-full min-h-screen fixed top-0 left-0 z-10 sidebar-transition">
+        <!-- Logo -->
+        <div class="logo mb-8">
+            <div class="text-2xl font-bold text-gray-800 font-poppins">
+                <b class="text-blue-600">tec</b><span>doit</span>
+            </div>
+        </div>
+
+        <!-- Separator -->
+        <div class="w-full h-px bg-gray-200 mb-8"></div>
+
+        <!-- Navigation Pages -->
+        <div class="pages flex flex-col gap-4">
+            <a href="ListadoPreguntas.html" class="dashboard flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-home text-gray-600"></i> <!-- Home icon -->
+                <div class="pagetitle5 font-semibold">inicio</div>
+            </a>
+            <a href="CrearPregunta.html" class="nftMarketplace flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-plus-circle"></i> <!-- Plus icon -->
+                <div class="pagetitle font-semibold">crear pregunta</div>
+            </a>
+            <a href="RevisarPregunta.html" class="kanban flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-eye"></i> <!-- Eye icon for review -->
+                <div class="pagetitle font-semibold">revisión de preguntas</div>
+            </a>
+            <a href="Perfil.html" class="profile flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200 active-link">
+                <i class="fas fa-user-circle text-blue-600"></i> <!-- Profile icon -->
+                <div class="pagetitle font-semibold">perfil</div>
+            </a>
+            <a href="login.html" class="authentication flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-sign-out-alt"></i> <!-- Logout icon -->
+                <div class="pagetitle font-semibold">salir</div>
+            </a>
+        </div>
+
+        <!-- Avatar in sidebar -->
+        <div class="avatarStyle6 mt-auto pt-6 flex justify-center">
+            <img class="rounded-full h-12 w-12 object-cover" alt="User Avatar" src="https://placehold.co/128x128/aabbcc/ffffff?text=User" />
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div id="mainContent" class="flex-1 ml-64 p-8 main-content-transition">
+        <div class="iniciosimple flex flex-col w-full h-full gap-5">
+            <!-- Header section -->
+            <div class="header flex justify-between items-center w-full pb-4">
+                <div class="indice flex-1">
+                    <div class="text-sm text-gray-500 mb-2">
+                        <a href="ListadoPreguntas.html" class="inicio underline text-gray-500 hover:text-blue-600">inicio</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- Toggle Button -->
+                    <button id="sidebarToggle" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                        <i class="fas fa-bars text-gray-700"></i>
+                    </button>
+                    <!-- "tecdoit" logo in header -->
+                    <div class="text-xl font-bold text-gray-800 font-poppins">
+                        <b class="text-blue-600">tec</b><span>doit</span>
+                    </div>
+                    <!-- User avatar in header -->
+                    <img class="miscIcon rounded-full h-12 w-12 object-cover" alt="User Avatar" src="https://placehold.co/128x128/aabbcc/ffffff?text=User" />
+                </div>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="lugarParent profile-card relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center">
+                <!-- Top-right edit icon -->
+                <button class="absolute top-8 right-8 text-gray-600 hover:text-blue-600 focus:outline-none">
+                    <i class="fas fa-edit text-xl"></i>
+                </button>
+
+                <!-- Centered Avatar -->
+                <img class="miscIcon rounded-full w-44 h-44 object-cover -mt-16 mb-6 border-4 border-white shadow-md" alt="Profile Avatar" src="https://placehold.co/170x170/aabbcc/ffffff?text=Avatar" />
+                <!-- Placeholder for profile avatar URL from AWS BD -->
+                <!-- <img src="YOUR_AWS_S3_BUCKET_URL/profile_avatar.png" alt="Profile Avatar" /> -->
+
+                <input type="text" value="Daniel Pérez Rojas" class="nombre editable-text text-3xl font-bold text-gray-800 mb-2" />
+                <input type="text" value="ITESM Puebla - Administrador" class="lugar editable-text text-lg text-gray-700 mb-6" />
+
+                <div class="title w-full mb-4">
+                    <span class="titleTxt">
+                        <input type="text" value="Profesor - Especialista en Matemáticas" class="profesorEspecialista editable-text text-xl text-gray-800 block mb-1" />
+                        <input type="text" value="Jefe de Carrera ITC" class="profesorEspecialista editable-text text-xl text-gray-800 block" />
+                    </span>
+                </div>
+
+                <div class="title1 w-full text-left">
+                    <span class="titleTxt block">
+                        <p class="sobreM text-xl font-semibold text-gray-800 mb-2">Sobre mí:</p>
+                        <textarea class="loremIpsumDolorSitAmetCo editable-text italic-light text-lg text-gray-700 w-full" rows="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        let isSidebarOpen = true; // Initial state
+
+        function toggleSidebar() {
+            if (isSidebarOpen) {
+                // Hide sidebar: move it off-screen to the left
+                sidebar.style.transform = 'translateX(-100%)';
+                // Adjust main content margin to take full width
+                mainContent.style.marginLeft = '0';
+            } else {
+                // Show sidebar: move it back to its original position
+                sidebar.style.transform = 'translateX(0)';
+                // Adjust main content margin back to original
+                mainContent.style.marginLeft = '16rem'; /* Corresponds to w-64 (16rem) */
+            }
+            isSidebarOpen = !isSidebarOpen;
+        }
+
+        // Add event listener to the toggle button
+        sidebarToggle.addEventListener('click', toggleSidebar);
+
+        // Adjust layout on window load and resize for initial state and responsiveness
+        function adjustLayoutForScreenSize() {
+            if (window.innerWidth < 1024) { // Adjusted breakpoint for medium screens (lg: from Tailwind)
+                if (isSidebarOpen) {
+                    toggleSidebar(); // Hide sidebar by default on smaller screens
+                }
+            } else { // For larger screens (desktop)
+                if (!isSidebarOpen) {
+                    toggleSidebar(); // Ensure sidebar is visible by default on larger screens
+                }
+            }
+        }
+
+        // Call the adjustment function on load and resize
+        window.addEventListener('load', adjustLayoutForScreenSize);
+        window.addEventListener('resize', adjustLayoutForScreenSize);
+    </script>
+</body>
+</html>

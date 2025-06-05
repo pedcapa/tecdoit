@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisar Pregunta - TecDoit</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the DM Sans and Poppins fonts, and overall layout */
+        body {
+            font-family: 'DM Sans', sans-serif; /* Primary font from original CSS */
+            background-color: #f4f7fe; /* Background color from original CSS */
+            margin: 0;
+            display: flex; /* Use flexbox for the main layout */
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll during transitions */
+            color: #707eae; /* Default text color from original CSS */
+            font-size: 0.875rem; /* Base font size, 14px */
+        }
+
+        /* Active link styling for sidebar */
+        .active-link {
+            background-color: #e0f2fe; /* Light blue background for active state */
+            color: #1d4ed8; /* Darker blue text color */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+
+        /* Custom transition for sidebar and main content */
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .main-content-transition {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Specific styles from VerPreguntaSimple.module.css adapted or recreated */
+        .header-section {
+            background-color: #f4f7fe; /* Match body background */
+            padding: 10px;
+        }
+
+        .preview-circle {
+            border-radius: 15px; /* Rounded corners for the preview button */
+            background-color: #8097ce; /* Blue background */
+            border: 2px solid #454d60; /* Darker border */
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .preview-circle:hover {
+            opacity: 1;
+        }
+
+        /* Styling for the main question and options container */
+        .board-container {
+            border: 2px solid #8e99b5; /* Border from TSX */
+            border-radius: 8px; /* Rounded corners */
+            overflow: hidden;
+            background-color: white; /* White background for the board */
+        }
+
+        /* Styles for the review settings panel */
+        .review-settings-panel {
+            border: 2px solid #8e99b5;
+            border-radius: 20px;
+            background-color: #e8ecf6; /* Light gray background */
+            padding: 11px 10px;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            height: 120px; /* Adjust height as needed */
+            border: 1px solid #8097ce; /* Border color from TSX */
+            border-radius: 5px;
+            padding: 10px;
+            resize: vertical; /* Allow vertical resizing */
+            background-color: #f8faff; /* Light background for textarea */
+        }
+
+        .btn-action-green {
+            border-radius: 15px;
+            background-color: #aae3ac; /* Light green for accept */
+            border: 3px solid #8097ce;
+            padding: 8px 15px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #0023a5; /* Blue text */
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-action-green:hover {
+            background-color: #8fd292;
+        }
+
+        .btn-action-red {
+            border-radius: 15px;
+            background-color: rgba(255, 77, 77, 0.4); /* Light red for reject */
+            border: 3px solid #8097ce;
+            padding: 8px 15px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #0023a5; /* Blue text */
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-action-red:hover {
+            background-color: rgba(255, 77, 77, 0.6);
+        }
+    </style>
+    <!-- DM Sans and Poppins fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="antialiased">
+    <!-- Sidebar -->
+    <div id="sidebar" class="w-64 flex-shrink-0 bg-white shadow-lg flex flex-col p-6 h-full min-h-screen fixed top-0 left-0 z-10 sidebar-transition">
+        <!-- Logo -->
+        <div class="logo mb-8">
+            <div class="text-2xl font-bold text-gray-800 font-poppins">
+                <b class="text-blue-600">tec</b><span>doit</span>
+            </div>
+        </div>
+
+        <!-- Separator -->
+        <div class="w-full h-px bg-gray-200 mb-8"></div>
+
+        <!-- Navigation Pages -->
+        <div class="pages flex flex-col gap-4">
+            <a href="ListadoPreguntas.html" class="dashboard flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-home text-gray-600"></i> <!-- Home icon -->
+                <div class="pagetitle5 font-semibold">inicio</div>
+            </a>
+            <a href="CrearPregunta.html" class="nftMarketplace flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-plus-circle"></i> <!-- Plus icon -->
+                <div class="pagetitle font-semibold">crear pregunta</div>
+            </a>
+            <a href="RevisarPregunta.html" class="kanban flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200 active-link">
+                <i class="fas fa-eye text-blue-600"></i> <!-- Eye icon for review -->
+                <div class="pagetitle font-semibold">revisión de preguntas</div>
+            </a>
+            <a href="Perfil.html" class="profile flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-user-circle"></i> <!-- Profile icon -->
+                <div class="pagetitle font-semibold">perfil</div>
+            </a>
+            <a href="login.html" class="authentication flex items-center gap-3 p-3 text-gray-600 hover:bg-gray-100 rounded-lg transition duration-200">
+                <i class="fas fa-sign-out-alt"></i> <!-- Logout icon -->
+                <div class="pagetitle font-semibold">salir</div>
+            </a>
+        </div>
+
+        <!-- Avatar -->
+        <div class="avatarStyle6 mt-auto pt-6 flex justify-center">
+            <img class="rounded-full h-12 w-12 object-cover" alt="User Avatar" src="https://placehold.co/128x128/aabbcc/ffffff?text=User" />
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div id="mainContent" class="flex-1 ml-64 p-8 main-content-transition">
+        <div class="verpreguntasimple flex flex-col w-full h-full gap-5">
+            <!-- Header section -->
+            <div class="header flex justify-between items-center w-full pb-4">
+                <div class="indice flex-1">
+                    <div class="crearPreguntaContainer text-sm text-gray-500 mb-2">
+                        <a href="CrearPregunta.html" class="crearPregunta underline text-gray-500 hover:text-blue-600">crear pregunta</a> / visualizar pregunta
+                    </div>
+                    <b class="visualizarPregunta2001 text-3xl font-bold text-gray-800 leading-tight">visualizar pregunta #2001</b>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- Toggle Button -->
+                    <button id="sidebarToggle" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                        <i class="fas fa-bars text-gray-700"></i>
+                    </button>
+                    <!-- "tecdoit" logo in header -->
+                    <div class="text-xl font-bold text-gray-800 font-poppins">
+                        <b class="text-blue-600">tec</b><span>doit</span>
+                    </div>
+                    <!-- User avatar in header -->
+                    <img class="miscIcon rounded-full h-12 w-12 object-cover" alt="User Avatar" src="https://placehold.co/128x128/aabbcc/ffffff?text=User" />
+                </div>
+            </div>
+
+            <!-- Main content area for question display and review panel -->
+            <div class="content flex flex-col lg:flex-row gap-8 flex-grow">
+                <!-- Questions List (Left Panel) -->
+                <div class="questions flex flex-col w-full lg:w-1/4 min-w-[250px] bg-gray-100 border-2 border-gray-400 rounded-xl p-4 shadow-inner">
+                    <div class="question bg-gray-300 rounded-lg p-3 flex items-center gap-2 mb-2">
+                        <div class="flex-shrink-0">
+                            <div class="question-id-box flex items-center justify-center w-12 h-6 text-xs font-bold text-blue-800">2001</div>
+                        </div>
+                        <div class="text-base font-medium text-gray-800 truncate">Resuelve la siguiente...</div>
+                    </div>
+                    <div class="question1 bg-white rounded-lg p-3 flex items-center gap-2 mb-2">
+                        <div class="flex-shrink-0">
+                            <div class="question-id-box flex items-center justify-center w-12 h-6 text-xs font-bold text-blue-800">2012</div>
+                        </div>
+                        <div class="text-base font-medium text-gray-800 truncate">¿Cuál es la raíz cuadra...</div>
+                    </div>
+                    <div class="question1 bg-white rounded-lg p-3 flex items-center gap-2 mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="question-id-box flex items-center justify-center w-12 h-6 text-xs font-bold text-blue-800">2033</div>
+                        </div>
+                        <div class="text-base font-medium text-gray-800 truncate">¿Cuáles son las posibl...</div>
+                    </div>
+                </div>
+
+                <!-- Main Question Display Area (Center Panel) -->
+                <div class="check write flex flex-col w-full lg:w-1/2 min-w-[400px] relative">
+                    <div class="optionlist flex justify-end items-center w-full px-6 py-2 border-x-2 border-t-2 border-gray-400 rounded-t-lg">
+                        <div class="preview preview-circle">
+                            <i class="fas fa-eye text-white text-base"></i> <!-- Eye icon as per image -->
+                        </div>
+                    </div>
+                    <div class="board board-container w-full flex flex-col items-center justify-center p-6 gap-6">
+                        <div class="headerParent flex flex-col items-center justify-center w-full text-center">
+                            <div class="header1 w-full relative">
+                                <!-- Placeholder for main question image -->
+                                <img class="w-full max-w-xl h-auto mx-auto object-contain mb-4 border border-gray-300 p-2" alt="Main Question Image" src="https://placehold.co/1120x186/e0e0e0/555555?text=Question+Image+Placeholder" />
+                                <!-- Placeholder for main question image URL from AWS BD -->
+                                <!-- <img src="YOUR_AWS_S3_BUCKET_URL/question_image_2001.png" alt="Question Image" /> -->
+                                <div class="seleccionaLaOpcin text-xl text-gray-500 hidden">Selecciona la opción correcta.</div>
+                            </div>
+                            <div class="frameParent flex flex-wrap justify-center gap-8 p-4">
+                                <!-- Option images placeholders -->
+                                <div class="n1R1C1Parent flex items-center justify-center gap-8">
+                                    <!-- Option 1 Image -->
+                                    <img class="n1R1C1Icon w-40 h-24 object-contain border border-gray-300 p-2" alt="Option A Image" src="https://placehold.co/170x100/e0e0e0/555555?text=Option+A" />
+                                    <!-- Option 2 Image -->
+                                    <img class="n1R1C1Icon w-40 h-24 object-contain border border-gray-300 p-2" alt="Option B Image" src="https://placehold.co/170x100/e0e0e0/555555?text=Option+B" />
+                                </div>
+                                <div class="n1R1C1Parent flex items-center justify-center gap-8">
+                                    <!-- Option 3 Image -->
+                                    <img class="n1R1C1Icon w-40 h-24 object-contain border border-gray-300 p-2" alt="Option C Image" src="https://placehold.co/170x100/e0e0e0/555555?text=Option+C" />
+                                    <!-- Option 4 Image -->
+                                    <img class="n1R1C1Icon w-40 h-24 object-contain border border-gray-300 p-2" alt="Option D Image" src="https://placehold.co/170x100/e0e0e0/555555?text=Option+D" />
+                                </div>
+                                <!-- Placeholders for option image URLs from AWS BD -->
+                                <!--
+                                <img src="YOUR_AWS_S3_BUCKET_URL/option_A_2001.png" alt="Option A" />
+                                <img src="YOUR_AWS_S3_BUCKET_URL/option_B_2001.png" alt="Option B" />
+                                <img src="YOUR_AWS_S3_BUCKET_URL/option_C_2001.png" alt="Option C" />
+                                <img src="YOUR_AWS_S3_BUCKET_URL/option_D_2001.png" alt="Option D" />
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Settings Panel (Right Panel) -->
+                <div class="settings review-settings-panel flex flex-col w-full lg:w-1/4 min-w-[250px] p-4 shadow-inner">
+                    <div class="tituloConfiguraciones bg-white rounded-lg p-3 flex items-center justify-start mb-4">
+                        <b class="title3 text-lg font-bold text-gray-800">Comentarios</b>
+                    </div>
+                    <textarea class="comment-textarea mb-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-blue-500" placeholder="Escribe tus comentarios aquí..."></textarea>
+                    <button class="btn-action-green text-center py-2 mb-3">aceptar</button>
+                    <button class="btn-action-red text-center py-2">rechazar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        let isSidebarOpen = true; // Initial state
+
+        function toggleSidebar() {
+            if (isSidebarOpen) {
+                // Hide sidebar: move it off-screen to the left
+                sidebar.style.transform = 'translateX(-100%)';
+                // Adjust main content margin to take full width
+                mainContent.style.marginLeft = '0';
+            } else {
+                // Show sidebar: move it back to its original position
+                sidebar.style.transform = 'translateX(0)';
+                // Adjust main content margin back to original
+                mainContent.style.marginLeft = '16rem'; /* Corresponds to w-64 (16rem) */
+            }
+            isSidebarOpen = !isSidebarOpen;
+        }
+
+        // Add event listener to the toggle button
+        sidebarToggle.addEventListener('click', toggleSidebar);
+
+        // Adjust layout on window load and resize for initial state and responsiveness
+        function adjustLayoutForScreenSize() {
+            if (window.innerWidth < 1024) { // Adjusted breakpoint for medium screens (lg: from Tailwind)
+                if (isSidebarOpen) {
+                    toggleSidebar(); // Hide sidebar by default on smaller screens
+                }
+            } else { // For larger screens (desktop)
+                if (!isSidebarOpen) {
+                    toggleSidebar(); // Ensure sidebar is visible by default on larger screens
+                }
+            }
+        }
+
+        // Call the adjustment function on load and resize
+        window.addEventListener('load', adjustLayoutForScreenSize);
+        window.addEventListener('resize', adjustLayoutForScreenSize);
+    </script>
+</body>
+</html>
