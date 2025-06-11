@@ -1,0 +1,14 @@
+<!-- ─────────────────── revisionPreguntas.html ─────────────────────────── -->
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Revisión de preguntas – Tecdoit</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body data-page="revision" class="min-h-screen bg-gray-100">
+  <header class="bg-white shadow p-4 flex justify-between items-center"><a id="logoRevision" class="text-xl font-bold text-indigo-600 cursor-pointer">tecdoit</a><img id="avatarRevision" src="assets/placeholder-avatar.png" class="w-10 h-10 rounded-full object-cover cursor-pointer" /></header>
+  <main class="p-6 grid grid-cols-5 gap-4 max-w-7xl mx-auto">
+    <!-- Lista izquierda -->
+    <aside class="col-span-1 bg-white rounded-xl shadow p-4"><ul id="revList" class="space-y-2 text-sm overflow-y-auto max-h-[calc(100vh-180px)]"></ul></aside>
+    <!-- Vista pregunta -->
+    <section class="col-span-3 bg-white rounded-xl shadow p-4 flex flex-col items-center overflow-y-auto"><img id="revEnunImg" class="max-w-full"/><p id="revEnunText" class="text-xl font-semibold"></p><div id="revOpts" class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6"></div></section>
+    <!-- Panel decisión -->
+    <aside class="col-span-1 bg-white rounded-xl shadow p-4 space-y-4 text-sm"><textarea id="revComment" rows="6" placeholder="Comentarios..." class="w-full border rounded px-2 py-1"></textarea><div class="flex space-x-2"><button id="acceptBtn" class="flex-1 bg-green-500 text-white px-2 py-1 rounded">aceptar</button><button id="rejectBtn" class="flex-1 bg-red-500 text-white px-2 py-1 rounded">rechazar</button></div><div class="flex items-center space-x-2 pt-4"><img id="revAutorAvatar" src="assets/placeholder-avatar.png" class="w-8 h-8 rounded-full object-cover"/><div><p id="revAutorNombre" class="font-semibold"></p><p id="revAutorCargo" class="text-xs text-gray-600"></p></div></div><button id="viewProfileBtn" class="w-full mt-2 px-4 py-1 rounded-full border border-indigo-400 text-indigo-800">ver perfil</button></aside>
+  </main>
+  <script type="module" src="main.js"></script>
+</body></html>

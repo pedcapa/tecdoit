@@ -1,0 +1,26 @@
+<!-- ─────────────────── listadoPreguntas.html ─────────────────────────── -->
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Listado de preguntas – Tecdoit</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body data-page="listado" class="min-h-screen bg-gray-100">
+  <header class="bg-white shadow p-4 flex justify-between items-center"><a id="logoListado" class="text-xl font-bold text-indigo-600 cursor-pointer">tecdoit</a><img id="avatarListado" src="assets/placeholder-avatar.png" class="w-10 h-10 rounded-full object-cover cursor-pointer" /></header>
+  <main class="p-6 max-w-7xl mx-auto bg-white rounded-xl shadow">
+    <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-indigo-900">Preguntas</h2><div class="space-x-4"><button id="reviewBtn" class="px-6 py-2 rounded-full border border-indigo-400 text-indigo-800 disabled:opacity-40 disabled:pointer-events-none">revisar</button><button id="editDraftBtn" class="px-6 py-2 rounded-full border border-indigo-400 text-indigo-800 disabled:opacity-40 disabled:pointer-events-none">editar borrador</button></div></div>
+    <div class="overflow-x-auto"><table id="pregTable" class="min-w-full text-sm">
+      <thead class="bg-gray-50 text-left"><tr>
+        <th class="px-2"><input type="checkbox" id="checkAll" class="w-4 h-4"></th>
+        <th data-key="id_pregunta"       class="sortable px-2 cursor-pointer">ID ▼</th>
+        <th data-key="enunciado"         class="sortable px-2 cursor-pointer">enunciado</th>
+        <th data-key="tipo"             class="sortable px-2 cursor-pointer">tipo</th>
+        <th data-key="id_isla"          class="sortable px-2 cursor-pointer">isla</th>
+        <th class="px-2">temas</th>
+        <th data-key="dificultad"       class="sortable px-2 cursor-pointer">dificultad</th>
+        <th data-key="estado"           class="sortable px-2 cursor-pointer">estado</th>
+        <th data-key="fecha_creacion"   class="sortable px-2 cursor-pointer">fecha</th>
+        <th class="px-2">acciones</th>
+      </tr></thead>
+      <tbody id="pregBody"></tbody>
+    </table></div>
+    <div class="flex justify-between items-center text-xs text-gray-500 mt-2"><span id="pagerInfo"></span><div class="space-x-2"><button id="prevPage" class="px-2" >&lt;</button><button id="nextPage" class="px-2" >&gt;</button></div></div>
+  </main>
+  <div id="temaPopover" class="hidden fixed bg-white border rounded shadow p-2 text-sm max-w-xs"></div>
+  <script type="module" src="main.js"></script>
+</body></html>

@@ -1,0 +1,26 @@
+<!-- ─────────────────── crearPreguntas.html ─────────────────────────── -->
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Crear/editar pregunta – Tecdoit</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body data-page="editor" class="min-h-screen bg-gray-100">
+  <header class="bg-white shadow p-4 flex justify-between items-center"><a id="logoEditor" class="text-xl font-bold text-indigo-600 cursor-pointer">tecdoit</a><img id="avatarEditor" src="assets/placeholder-avatar.png" class="w-10 h-10 rounded-full object-cover cursor-pointer" /></header>
+  <main class="p-6 grid grid-cols-5 gap-4 max-w-7xl mx-auto">
+    <!-- Panel izquierdo -->
+    <aside class="col-span-1 bg-white rounded-xl shadow p-4 flex flex-col"><button id="sendAllBtn" class="mb-4 px-4 py-1 rounded-full border border-indigo-400 text-indigo-800 disabled:opacity-40">enviar todas</button><ul id="questionList" class="flex-1 space-y-2 overflow-y-auto text-sm"></ul><button id="addQuestionBtn" class="mt-4 text-indigo-600 text-xs">Agregar pregunta</button></aside>
+    <!-- Editor central -->
+    <section class="col-span-3 bg-white rounded-xl shadow p-4 flex flex-col">
+      <textarea id="enunciadoInput" class="w-full text-xl font-semibold h-24 resize-none mb-4" placeholder="Escribe el enunciado..."></textarea>
+      <ul id="optionList" class="space-y-2 flex-1 overflow-y-auto"></ul>
+      <button id="addOptionBtn" class="mt-2 text-indigo-600 text-sm">Agregar opción</button>
+    </section>
+    <!-- Config/temas -->
+    <aside class="col-span-1 bg-white rounded-xl shadow p-4 space-y-4 text-sm">
+      <div><label class="block">Isla<select id="islaSelect" class="w-full border rounded px-2 py-1"></select></label></div>
+      <div><label class="block">Dificultad<select id="difSelect" class="w-full border rounded px-2 py-1"><option value="1">Fácil</option><option value="2">Medio</option><option value="3">Difícil</option></select></label></div>
+      <div class="flex items-center justify-between"><span>Randomizar</span><input type="checkbox" id="randSwitch" class="toggle-checkbox"></div>
+      <div class="flex items-center justify-between"><span>Verdadero/Falso</span><input type="checkbox" id="vfSwitch" class="toggle-checkbox"></div>
+      <div class="flex items-center justify-between"><span>Selección Múltiple (checkbox)</span><input type="checkbox" id="cbSwitch" class="toggle-checkbox"></div>
+      <div><p class="font-semibold mb-1">Temas</p><div id="temaList" class="max-h-48 overflow-y-auto space-y-1"></div></div>
+      <button id="sendBtn" class="w-full mt-2 px-4 py-1 rounded-full border border-indigo-400 text-indigo-800 disabled:opacity-40">enviar</button>
+    </aside>
+  </main>
+  <script type="module" src="main.js"></script>
+</body></html>

@@ -1,0 +1,68 @@
+<!-- Tecdoit Front‑end – MVP (index.html, inicio.html, editarMiPerfil.html + main.js)
+     Uso: coloca esta carpeta en la raíz que Nginx sirva junto a /assets.
+     Requiere que el backend FastAPI corra en http://127.0.0.1:8000 (cambia BASE_URL si es distinto). -->
+
+<!-- ───────────────────────────── index.html ───────────────────────────── -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión – Tecdoit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="assets/logo.svg" />
+  </head>
+  <body data-page="login" class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-sm p-6 bg-white rounded-xl shadow">
+      <h1 class="text-3xl font-bold text-center mb-6 text-indigo-600">tecdoit</h1>
+      <form id="loginForm" class="space-y-4">
+        <input
+          type="email"
+          id="email"
+          placeholder="Correo electrónico"
+          required
+          class="w-full px-4 py-2 border rounded"
+        />
+        <div class="relative">
+          <input
+            type="password"
+            id="password"
+            placeholder="Contraseña"
+            required
+            class="w-full px-4 py-2 border rounded pr-10"
+          />
+          <button
+            type="button"
+            id="togglePassword"
+            class="absolute inset-y-0 right-0 flex items-center px-3"
+          >
+            <img
+              src="assets/icons/btn-show.svg"
+              alt="Mostrar contraseña"
+              id="togglePasswordIcon"
+              class="w-5 h-5"
+            />
+          </button>
+        </div>
+        <label for="remember" class="flex items-center cursor-pointer">
+          <input type="checkbox" id="remember" class="sr-only" />
+          <img
+            id="rememberIcon"
+            src="assets/icons/checkbox-unselected.svg"
+            alt="recordar"
+            class="w-5 h-5"
+          />
+          <span class="ml-2 text-sm">Recuérdame</span>
+        </label>
+        <button
+          type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded"
+        >
+          Autentificar
+        </button>
+        <p id="loginError" class="text-red-600 text-sm mt-2 hidden"></p>
+      </form>
+    </div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

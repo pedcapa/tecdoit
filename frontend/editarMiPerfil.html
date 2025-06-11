@@ -1,0 +1,115 @@
+<!-- ─────────────────────── editarMiPerfil.html ─────────────────────────── -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar perfil – Tecdoit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body data-page="editProfile" class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-2xl bg-white p-8 rounded-xl shadow">
+      <h2 class="text-2xl font-bold mb-4">Editar mi perfil</h2>
+      <form id="profileForm" class="space-y-4">
+        <!-- Avatar -->
+        <div class="flex items-center space-x-4">
+          <img
+            id="avatarPreview"
+            src="assets/placeholder-avatar.png"
+            alt="avatar"
+            class="w-24 h-24 rounded-full object-cover"
+          />
+          <input type="file" id="avatar" accept="image/*" class="border p-2" />
+          <input type="hidden" id="avatarUrl" name="avatar_url" value="" />
+        </div>
+        <!-- Datos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-sm text-gray-600">Nombre:</span>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="mt-1 w-full border rounded px-3 py-2"
+              required
+            />
+          </label>
+          <label class="block">
+            <span class="text-sm text-gray-600">Apellido:</span>
+            <input
+              type="text"
+              id="apellido"
+              name="apellido"
+              class="mt-1 w-full border rounded px-3 py-2"
+              required
+            />
+          </label>
+          <label class="block">
+            <span class="text-sm text-gray-600">Correo:</span>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              class="mt-1 w-full border rounded px-3 py-2"
+              required
+            />
+          </label>
+          <label class="block">
+            <span class="text-sm text-gray-600">Campus:</span>
+            <input
+              type="text"
+              id="campus"
+              name="campus"
+              class="mt-1 w-full border rounded px-3 py-2"
+            />
+          </label>
+          <label class="block">
+            <span class="text-sm text-gray-600">Título:</span>
+            <input
+              type="text"
+              id="titulo"
+              name="titulo"
+              class="mt-1 w-full border rounded px-3 py-2"
+            />
+          </label>
+          <label class="block">
+            <span class="text-sm text-gray-600">Cargo:</span>
+            <input
+              type="text"
+              id="cargo"
+              name="cargo"
+              class="mt-1 w-full border rounded px-3 py-2"
+            />
+          </label>
+        </div>
+        <label class="block">
+          <span class="text-sm text-gray-600">Biografía:</span>
+          <textarea
+            id="bio"
+            name="bio"
+            rows="3"
+            class="mt-1 w-full border rounded px-3 py-2"
+          ></textarea>
+        </label>
+        <!-- Botones -->
+        <div class="flex justify-end space-x-2 pt-4">
+          <button
+            type="button"
+            id="cancelEditBtn"
+            class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-200"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700"
+          >
+            Guardar
+          </button>
+        </div>
+        <p id="profileError" class="text-red-600 text-sm mt-2 hidden"></p>
+      </form>
+    </div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

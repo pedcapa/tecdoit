@@ -1,0 +1,14 @@
+.env
+__pycache__
+*.py[cod]
+app.zip
+db.sql
+respaldo.sql
+faltantes.txt
+app/t_t_i
+vistas
+app/pruebas1.png
+app/pruebas2.png
+.venv
+.pytest_cache
+.DS_Store
